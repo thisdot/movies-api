@@ -3,8 +3,6 @@ import { startServerAndCreateLambdaHandler } from '@as-integrations/aws-lambda';
 import { resolvers, typeDefs } from '../schema';
 import TechnologyModel from '../models/Technology';
 
-const { CACHE_TTL_SECONDS = 900 } = process.env;
-
 export interface MyContext extends BaseContext {
 	dataSources: {
 		technologies: TechnologyModel[];
@@ -13,9 +11,6 @@ export interface MyContext extends BaseContext {
 export const apolloServer = new ApolloServer<MyContext>({
 	typeDefs,
 	resolvers,
-	persistedQueries: {
-		ttl: Number(CACHE_TTL_SECONDS),
-	},
 	formatError: (formattedError, error) => {
 		if (!(error instanceof Error)) return formattedError;
 
