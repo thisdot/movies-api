@@ -7,9 +7,6 @@
     "dev": "sls offline start",
     "test": "npm run codegen && jest",
     "lint": "eslint . --ext .ts",
-    "infrastructure:up": "docker compose up -d",
-    "infrastructure:pause": "docker compose stop",
-    "infrastructure:down": "docker compose down --remove-orphans --volumes",
     "deploy": "sls deploy",
     "format": "prettier --write \"**/*.{ts,js,json,md}\"",
     "ts:check": "tsc --noEmit",
@@ -29,18 +26,12 @@
   "license": "MIT",
   "dependencies": {
     "@apollo/server": "4.3.0",
-    "@apollo/utils.keyvadapter": "2.0.0",
     "@as-integrations/aws-lambda": "1.2.1",
-    "@aws-sdk/client-sqs": "3.259.0",
-    "@keyv/redis": "2.5.4",
     "aws-sdk": "2.1306.0",
     "contentful-management": "10.26.0",
     "graphql": "16.6.0",
     "graphql-tag": "2.12.6",
-    "keyv": "4.5.2",
-    "serverless": "3.26.0",
-    "serverless-offline-sqs": "7.3.2",
-    "serverless-plugin-typescript": "2.1.4"
+    "serverless": "3.26.0"
   },
   "devDependencies": {
     "@aws-sdk/types": "3.267.0",
@@ -61,6 +52,7 @@
     "prettier": "2.8.3",
     "serverless-dotenv-plugin": "4.0.2",
     "serverless-offline": "12.0.4",
+    "serverless-plugin-typescript": "^2.1.5",
     "ts-jest": "29.0.5",
     "ts-node": "10.9.1",
     "typescript": "4.9.4"

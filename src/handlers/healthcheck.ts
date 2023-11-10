@@ -1,15 +1,12 @@
 import { APIGatewayProxyHandler } from 'aws-lambda';
 import { getContentfulHealth } from '../utils/contentful';
-import { getRedisHealth } from '../utils/redis';
 
 export type HealthCheckResult = {
-	cacheDatabase: boolean;
 	contentful: boolean;
 };
 
 export const handler: APIGatewayProxyHandler = async () => {
 	const result: HealthCheckResult = {
-		cacheDatabase: await getRedisHealth(),
 		contentful: await getContentfulHealth(),
 	};
 
