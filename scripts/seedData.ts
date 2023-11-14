@@ -41,7 +41,6 @@ const __dirname = dirname(__filename);
 const { CONTENTFUL_CONTENT_MANAGEMENT_API_TOKEN, CONTENTFUL_SPACE_ID, CONTENTFUL_ENVIRONMENT } =
 	process.env;
 
-// Replace with the actual path to your seed file
 const seedData = JSON.parse(fs.readFileSync(join(__dirname, 'seedData.json'), 'utf8'));
 
 const client = contentfulManagement.createClient({
