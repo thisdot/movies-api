@@ -1,5 +1,5 @@
 import { createClient, Environment } from 'contentful-management';
-import { getEnvironment } from './contentful';
+import { getCMAEnvironment } from './contentful';
 
 const dummyEnvironment = {
 	accessToken: 'DUMMYTOKEN',
@@ -21,7 +21,7 @@ describe('.getEnviroment', () => {
 	let environment: Environment;
 	let mockGetSpace: jest.Mock;
 	beforeAll(async () => {
-		environment = await getEnvironment();
+		environment = await getCMAEnvironment();
 	});
 
 	it('calls create client with expected arguments', () => {
@@ -37,11 +37,11 @@ describe('.getEnviroment', () => {
 		expect(mockGetSpace).toHaveBeenCalledWith('MOCK_CONTENTFUL_SPACE_ID');
 	});
 
-	it('calls getEnvironment function from space result with expected argument', async () => {
+	it('calls getCMAEnvironment function from space result with expected argument', async () => {
 		const mockGetSpaceResult = await mockGetSpace.mock.results[0].value;
-		const mockGetEnvironment = mockGetSpaceResult.getEnvironment;
-		expect(mockGetEnvironment).toHaveBeenCalledTimes(1);
-		expect(mockGetEnvironment).toHaveBeenCalledWith('MOCK_CONTENTFUL_ENVIRONMENT');
+		const mockgetCMAEnvironment = mockGetSpaceResult.getCMAEnvironment;
+		expect(mockgetCMAEnvironment).toHaveBeenCalledTimes(1);
+		expect(mockgetCMAEnvironment).toHaveBeenCalledWith('MOCK_CONTENTFUL_ENVIRONMENT');
 	});
 
 	it('returns expected result', () => {

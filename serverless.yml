@@ -18,7 +18,7 @@ plugins:
 # The `provider` block defines where your service will be deployed
 provider:
   name: aws
-  runtime: nodejs16.x
+  runtime: nodejs18.x
 
 # The `functions` block defines what code to deploy
 functions:
@@ -40,4 +40,10 @@ functions:
     events:
       - http:
           path: healthcheck
+          method: get
+  moviesByGenre:
+    handler: src/handlers/moviesByGenre.handler
+    events:
+      - http:
+          path: genre/movies
           method: get

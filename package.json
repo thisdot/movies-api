@@ -28,6 +28,7 @@
     "@apollo/server": "4.3.0",
     "@as-integrations/aws-lambda": "1.2.1",
     "aws-sdk": "2.1306.0",
+    "contentful": "^10.6.9",
     "contentful-management": "10.26.0",
     "graphql": "16.6.0",
     "graphql-tag": "2.12.6",

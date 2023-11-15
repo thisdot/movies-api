@@ -1,9 +1,9 @@
-import { getEnvironment } from './contentful';
+import { getCMAEnvironment } from './contentful';
 import { getContentfulHealth } from './contentful-healthcheck';
 
-const MOCK_GET_ENVIRONMENT = getEnvironment as jest.Mock;
+const MOCK_GET_ENVIRONMENT = getCMAEnvironment as jest.Mock;
 jest.mock('./contentful', () => ({
-	getEnvironment: jest.fn(),
+	getCMAEnvironment: jest.fn(),
 }));
 
 describe('.healthcheck', () => {

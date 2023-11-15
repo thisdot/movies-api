@@ -1,10 +1,10 @@
-import { getEnvironment } from '../../utils/contentful';
+import { getCMAEnvironment } from '../../utils/contentful';
 import TechnologyModel, { TechnologyFields } from './TechnologyModel';
 
 type WithRequired<T, K extends keyof T> = T & { [P in K]-?: T[P] };
 
 export default async function create(data: WithRequired<TechnologyFields, 'displayName'>) {
-	const environment = await getEnvironment();
+	const environment = await getCMAEnvironment();
 
 	const entry = await environment.createEntry('technology', {
 		fields: {
