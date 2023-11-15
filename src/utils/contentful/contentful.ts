@@ -6,8 +6,7 @@ import * as dotenv from 'dotenv';
 dotenv.config();
 
 export type ContentfulPaginationRequest = {
-	limit?: number;
-	skip?: number;
+	page?: number;
 };
 
 export const CONTENTFUL_LIMIT = 25;

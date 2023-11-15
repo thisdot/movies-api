@@ -1,10 +1,14 @@
+import { DataWithPaginationResponse } from '../../types/apiResponse';
 import { cdaClient, ContentfulPaginationRequest, CONTENTFUL_LIMIT } from '../../utils/contentful';
-import GenreModel from './GenreModel';
+import { Genre } from './GenreModel';
+import parseGenre from './parseGenre';
 
 export default async function getAll({
-	limit = CONTENTFUL_LIMIT,
-	skip = 0,
-}: ContentfulPaginationRequest) {
+	page = 1,
+}: ContentfulPaginationRequest): Promise<DataWithPaginationResponse<Genre>> {
+	const limit = CONTENTFUL_LIMIT;
+	const skip = (page - 1) * limit;
+
 	try {
 		const response = await cdaClient.getEntries({
 			content_type: 'genre',
@@ -15,7 +19,8 @@ export default async function getAll({
 			include: 0, // remove unecessary data - we don't care about includes here
 		});
 
-		return response.items.map((entry) => new GenreModel(entry).toGenre());
+		const data = response.items.map((entry) => parseGenre(entry));
+		return { data, totalPages: Math.ceil(response.total / limit) };
 	} catch (e) {
 		console.log('======= something went wrong fetch =======');
 		console.log(String(e));

@@ -1,6 +1,6 @@
 import { Entry, EntrySkeletonType, FieldsType } from 'contentful';
 
-type GenreContentfulEntry = Entry<EntrySkeletonType<FieldsType, string>, undefined, string>;
+export type GenreContentfulEntry = Entry<EntrySkeletonType<FieldsType, string>, undefined, string>;
 
 export type Genre = {
 	id: string;
@@ -37,12 +37,4 @@ export default class GenreModel {
 	}
 
 	constructor(private entry: GenreContentfulEntry) {}
-
-	toGenre(): Genre {
-		return {
-			id: this.id,
-			title: this.title,
-			movies: this.movies,
-		};
-	}
 }

@@ -1,6 +1,5 @@
 import { APIGatewayProxyHandler } from 'aws-lambda';
 import getAll from '../models/Genre/getAll';
-import { cdaClient, CONTENTFUL_LIMIT } from '../utils/contentful';
 
 export type HealthCheckResult = {
 	contentful: boolean;
@@ -15,15 +14,12 @@ export const handler: APIGatewayProxyHandler = async (event) => {
 		}
 	}
 
-	const limit = CONTENTFUL_LIMIT;
-	const skip = (page - 1) * limit;
-
 	try {
-		const genres = await getAll({ limit, skip });
+		const result = await getAll({ page });
 
 		return {
 			statusCode: 200,
-			body: JSON.stringify(genres),
+			body: JSON.stringify(result),
 		};
 	} catch (err) {
 		console.error(err);
