@@ -1,2 +1,2 @@
-export { getEnvironment } from './contentful';
+export * from './contentful';
 export { getContentfulHealth } from './contentful-healthcheck';

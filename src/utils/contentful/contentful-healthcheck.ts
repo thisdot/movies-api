@@ -1,8 +1,8 @@
-import { getEnvironment } from './contentful';
+import { getCMAEnvironment } from './contentful';
 
 export const getContentfulHealth = async () => {
 	try {
-		await getEnvironment();
+		await getCMAEnvironment();
 		return true;
 	} catch {
 		return false;

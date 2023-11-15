@@ -1,9 +1,9 @@
-import { getEnvironment } from '../../utils/contentful';
+import { getCMAEnvironment } from '../../utils/contentful';
 import TechnologyModel from './TechnologyModel';
 
 export default async function getAll(limit?: number | null, skip?: number | null) {
 	try {
-		const environment = await getEnvironment();
+		const environment = await getCMAEnvironment();
 		const entries = await environment.getEntries({
 			content_type: 'technology',
 			limit: limit || 100,
