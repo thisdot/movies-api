@@ -1,11 +1,11 @@
 import { DataWithPaginationResponse } from '../../types/apiResponse';
-import { cdaClient, ContentfulPaginationRequest, CONTENTFUL_LIMIT } from '../../utils/contentful';
+import { cdaClient, CONTENTFUL_LIMIT } from '../../utils/contentful';
 import { Genre } from './GenreModel';
 import parseGenre from './parseGenre';
 
-export default async function getAll({
-	page = 1,
-}: ContentfulPaginationRequest): Promise<DataWithPaginationResponse<Genre>> {
+export default async function getAll({ page = 1 }: { page?: number } = {}): Promise<
+	DataWithPaginationResponse<Genre>
+> {
 	const limit = CONTENTFUL_LIMIT;
 	const skip = (page - 1) * limit;
 

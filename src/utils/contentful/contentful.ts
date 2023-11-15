@@ -5,10 +5,6 @@ import * as dotenv from 'dotenv';
 // load dotenv config
 dotenv.config();
 
-export type ContentfulPaginationRequest = {
-	page?: number;
-};
-
 export const CONTENTFUL_LIMIT = 25;
 
 export const cdaClient = createCDAClient({
