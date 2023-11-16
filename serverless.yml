@@ -50,3 +50,10 @@ functions:
     environment:
       CONTENTFUL_SPACE_ID: ${env:CONTENTFUL_SPACE_ID}
       CONTENTFUL_DELIVERY_API_TOKEN: ${env:CONTENTFUL_DELIVERY_API_TOKEN}
+  movies:
+    handler: src/handlers/movies/getMovies.handler
+    events:
+      - http:
+          path: /movies
+          method: get
+          cors: true
