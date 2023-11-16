@@ -1,10 +1,6 @@
 import { APIGatewayProxyHandler } from 'aws-lambda';
 import getAll from '../models/Genre/getAll';
 
-export type HealthCheckResult = {
-	contentful: boolean;
-};
-
 export const handler: APIGatewayProxyHandler = async (event) => {
 	let page = 1;
 	if (event.queryStringParameters && event.queryStringParameters.page) {
