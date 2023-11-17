@@ -25,6 +25,8 @@ export default async function getById(
 
 		return parseGenre(response);
 	} catch (err) {
+		// Contentful throws error when NotFound, let's transform into an empty return
+		// so the controller handles the 404 there
 		const contentfulError = err as CustomContentfulError;
 		if (contentfulError?.sys?.id === 'NotFound') {
 			return null;
