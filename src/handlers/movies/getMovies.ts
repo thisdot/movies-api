@@ -62,7 +62,7 @@ export const handler: APIGatewayProxyHandler = async (event) => {
 			// apply pagination
 			const { page = 1, limit = DEFAULT_CONTENTFUL_LIMIT } = searchFilters;
 
-			const result = sortedMovies.slice((page - 1) * limit, page * limit); // double check if this is the right slice
+			const result = sortedMovies.slice((page - 1) * limit, page * limit);
 
 			return {
 				statusCode: 200,
