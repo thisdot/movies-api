@@ -1,12 +1,12 @@
 import { Entry, EntrySkeletonType, FieldsType } from 'contentful';
 
 export type MovieModel = {
-	id: string | number;
+	id: string;
 	title: string;
-	posterURL: string;
+	posterUrl: string;
 	summary: string;
 	duration: string;
-	director: string[];
+	directors: string[];
 	mainActors: string[];
 	genres: string[];
 	datePublished: string;

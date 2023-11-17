@@ -4,34 +4,28 @@ import { PaginationOptions } from '../../types/pagination';
 import { DataWithPaginationResponse } from '../../types/apiResponse';
 import { MovieModel } from './type';
 
-type Options = PaginationOptions & {
+type QueryParamOptions = PaginationOptions & {
 	genre?: string;
 	search?: string;
-	ids?: Array<string>;
 };
 
 export default async function getAll({
 	limit = DEFAULT_CONTENTFUL_LIMIT,
 	page = 1,
 	search,
-	ids,
-}: Options): Promise<DataWithPaginationResponse<MovieModel>> {
-	try {
-		const skip = (page - 1) * limit;
+}: QueryParamOptions): Promise<DataWithPaginationResponse<MovieModel>> {
+	const skip = (page - 1) * limit;
 
-		const entries = await cdaClient.getEntries({
-			content_type: 'movie',
-			limit: limit,
-			skip: skip || 0,
-			'fields.title[match]': search,
-			...(ids && { 'sys.id[in]': ids?.join(',') }),
-		});
+	const entries = await cdaClient.getEntries({
+		content_type: 'movie',
+		limit: limit,
+		skip: skip || 0,
+		order: ['fields.title'],
+		'fields.title[match]': search,
+	});
 
-		const data = entries.items.map((entry) => parseMovieData(entry));
-		const totalPages = Math.ceil(entries.total / limit);
-		return { data, totalPages };
-	} catch (e) {
-		console.error(String(e));
-		throw e;
-	}
+	const parsedMovies = entries.items.map((entry) => parseMovieData(entry));
+	const totalPages = Math.ceil(entries.total / limit);
+
+	return { data: parsedMovies, totalPages };
 }

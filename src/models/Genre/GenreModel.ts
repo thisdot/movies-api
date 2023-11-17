@@ -1,11 +1,12 @@
 import { Entry, EntrySkeletonType, FieldsType } from 'contentful';
+import { MovieModel } from '../Movie/type';
 
 export type GenreContentfulEntry = Entry<EntrySkeletonType<FieldsType, string>, undefined, string>;
 
 export type Genre = {
 	id: string;
 	title: string | null;
-	movies: Array<GenreMovie>;
+	movies: Array<GenreMovie> | Array<MovieModel>;
 };
 
 // Might want to add more fields here in the future
@@ -21,6 +22,7 @@ export default class GenreModel {
 	public get title(): string | null {
 		return (this.entry.fields?.title as string) || '';
 	}
+
 	public set title(value: string | null) {
 		this.entry.fields.title = value;
 	}
