@@ -9,9 +9,9 @@ export default function parseGenre(entry: GenreContentfulEntry, getMovieData?: b
 		movies: getMovieData
 			? ((entry.fields?.movies as MovieContentfulEntry[]) || []).map((movie) =>
 					parseMovieData(movie)
-			  )
+			)
 			: ((entry.fields?.movies as MovieContentfulEntry[]) || []).map((movie) => ({
 					id: movie.sys.id,
-			  })),
+			})),
 	};
 }
