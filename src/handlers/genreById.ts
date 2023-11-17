@@ -1,12 +1,9 @@
 import { APIGatewayProxyHandler } from 'aws-lambda';
-import getAll from '../models/Genre/getAll';
+import getGenreById from '../models/Genre/getById';
 import { GenreResponse } from '../types/apiResponse';
+import { notFoundResponse, serverErrorResponse } from '../utils/api/apiResponses';
 
 export const handler: APIGatewayProxyHandler = async (event) => {
-	const notFoundResponse = {
-		statusCode: 404,
-		body: JSON.stringify({ message: 'Not Found' }),
-	};
 	const genreId = event?.pathParameters?.id;
 
 	if (!genreId) {
@@ -14,13 +11,13 @@ export const handler: APIGatewayProxyHandler = async (event) => {
 	}
 
 	try {
-		const response = await getAll({ query: { id: genreId } });
+		const response = await getGenreById(genreId);
 
-		if (!response.data?.length) {
+		if (!response) {
 			return notFoundResponse;
 		}
 
-		const { id, title, movies } = response.data[0];
+		const { id, title, movies } = response;
 
 		const result: GenreResponse = {
 			id,
@@ -33,9 +30,6 @@ export const handler: APIGatewayProxyHandler = async (event) => {
 			body: JSON.stringify(result),
 		};
 	} catch (err) {
-		return {
-			statusCode: 500,
-			body: JSON.stringify({ error: 'Internal Server Error' }),
-		};
+		return serverErrorResponse;
 	}
 };

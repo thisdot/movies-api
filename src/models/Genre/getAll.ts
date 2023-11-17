@@ -1,11 +1,12 @@
 import { DataWithPaginationResponse } from '../../types/apiResponse';
+import { ContentfulIncludeOptions, CONTENTFUL_INCLUDE } from '../../types/contentful';
 import { PaginationOptions } from '../../types/pagination';
 import { cdaClient, DEFAULT_CONTENTFUL_LIMIT } from '../../utils/contentful';
 import { Genre } from './GenreModel';
 import parseGenre from './parseGenre';
 
 type GetAllOptions = PaginationOptions & {
-	include?: 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10;
+	include?: ContentfulIncludeOptions;
 	query?: {
 		id?: string;
 		title?: string;
@@ -15,7 +16,7 @@ type GetAllOptions = PaginationOptions & {
 export default async function getAll({
 	page = 1,
 	limit = DEFAULT_CONTENTFUL_LIMIT,
-	include = 0,
+	include = CONTENTFUL_INCLUDE.noInclude,
 	query = {},
 }: GetAllOptions = {}): Promise<DataWithPaginationResponse<Genre>> {
 	const { id, title } = query;

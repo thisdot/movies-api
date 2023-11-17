@@ -1,5 +1,6 @@
 import { APIGatewayProxyHandler } from 'aws-lambda';
-import getAll from '../models/Genre/getAll';
+import getAllGenre from '../models/Genre/getAll';
+import { serverErrorResponse } from '../utils/api/apiResponses';
 import { DEFAULT_CONTENTFUL_LIMIT } from '../utils/contentful';
 
 export const handler: APIGatewayProxyHandler = async (event) => {
@@ -20,16 +21,13 @@ export const handler: APIGatewayProxyHandler = async (event) => {
 	}
 
 	try {
-		const result = await getAll({ page, limit });
+		const result = await getAllGenre({ page, limit });
 
 		return {
 			statusCode: 200,
 			body: JSON.stringify(result),
 		};
 	} catch (err) {
-		return {
-			statusCode: 500,
-			body: JSON.stringify({ error: 'Internal Server Error' }),
-		};
+		return serverErrorResponse;
 	}
 };
