@@ -2,6 +2,8 @@ import { Entry, EntrySkeletonType, FieldsType } from 'contentful';
 
 export type GenreContentfulEntry = Entry<EntrySkeletonType<FieldsType, string>, undefined, string>;
 
+export const GENRE_CONTENT_TYPE = 'genre';
+
 export type Genre = {
 	id: string;
 	title: string | null;

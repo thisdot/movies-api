@@ -1,13 +1,25 @@
 import { DataWithPaginationResponse } from '../../types/apiResponse';
+import { ContentfulIncludeOptions, CONTENTFUL_INCLUDE } from '../../types/contentful';
 import { PaginationOptions } from '../../types/pagination';
 import { cdaClient, DEFAULT_CONTENTFUL_LIMIT } from '../../utils/contentful';
 import { Genre } from './GenreModel';
 import parseGenre from './parseGenre';
 
+type GetAllOptions = PaginationOptions & {
+	include?: ContentfulIncludeOptions;
+	query?: {
+		id?: string;
+		title?: string;
+	};
+};
+
 export default async function getAll({
 	page = 1,
 	limit = DEFAULT_CONTENTFUL_LIMIT,
-}: PaginationOptions = {}): Promise<DataWithPaginationResponse<Genre>> {
+	include = CONTENTFUL_INCLUDE.noInclude,
+	query = {},
+}: GetAllOptions = {}): Promise<DataWithPaginationResponse<Genre>> {
+	const { id, title } = query;
 	const skip = (page - 1) * limit;
 
 	try {
@@ -17,7 +29,9 @@ export default async function getAll({
 			skip,
 			limit,
 			order: ['fields.title'],
-			include: 0, // remove unecessary data - we don't care about includes here
+			include,
+			...(id && { 'sys.id': id }),
+			...(title && { 'fields.title': title }),
 		});
 
 		const data = response.items.map((entry) => parseGenre(entry));
