@@ -19,6 +19,9 @@ plugins:
 provider:
   name: aws
   runtime: nodejs18.x
+  environment:
+    CONTENTFUL_SPACE_ID: ${env:CONTENTFUL_SPACE_ID}
+    CONTENTFUL_DELIVERY_API_TOKEN: ${env:CONTENTFUL_DELIVERY_API_TOKEN}
 
 # The `functions` block defines what code to deploy
 functions:
@@ -47,13 +50,16 @@ functions:
       - http:
           path: genre/movies
           method: get
-    environment:
-      CONTENTFUL_SPACE_ID: ${env:CONTENTFUL_SPACE_ID}
-      CONTENTFUL_DELIVERY_API_TOKEN: ${env:CONTENTFUL_DELIVERY_API_TOKEN}
   movies:
     handler: src/handlers/movies/getMovies.handler
     events:
       - http:
           path: /movies
+          cors: true
+  genreById:
+    handler: src/handlers/genreById.handler
+    events:
+      - http:
+          path: movies/genres/{id}
           method: get
           cors: true
