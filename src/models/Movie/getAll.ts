@@ -1,4 +1,4 @@
-import parseMovieData from './parseMovieData';
+import { parseMovieSummary } from './parseMovieData';
 import { cdaClient, DEFAULT_CONTENTFUL_LIMIT } from '../../utils/contentful';
 import { PaginationOptions } from '../../types/pagination';
 import { DataWithPaginationResponse } from '../../types/apiResponse';
@@ -24,7 +24,7 @@ export default async function getAll({
 		'fields.title[match]': search,
 	});
 
-	const parsedMovies = entries.items.map((entry) => parseMovieData(entry));
+	const parsedMovies = entries.items.map((entry) => parseMovieSummary(entry));
 	const totalPages = Math.ceil(entries.total / limit);
 
 	return { data: parsedMovies, totalPages };

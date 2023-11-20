@@ -1,5 +1,5 @@
 import { Genre, GenreContentfulEntry } from './GenreModel';
-import parseMovieData from '../Movie/parseMovieData';
+import { parseMovieSummary } from '../Movie/parseMovieData';
 import { MovieContentfulEntry } from '../Movie/type';
 
 export default function parseGenre(entry: GenreContentfulEntry, getMovieData?: boolean): Genre {
@@ -8,10 +8,10 @@ export default function parseGenre(entry: GenreContentfulEntry, getMovieData?: b
 		title: entry.fields.title as string,
 		movies: getMovieData
 			? ((entry.fields?.movies as MovieContentfulEntry[]) || []).map((movie) =>
-					parseMovieData(movie)
-			)
+					parseMovieSummary(movie)
+			  )
 			: ((entry.fields?.movies as MovieContentfulEntry[]) || []).map((movie) => ({
 					id: movie.sys.id,
-			})),
+			  })),
 	};
 }
