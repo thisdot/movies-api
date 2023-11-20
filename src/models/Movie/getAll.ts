@@ -2,7 +2,7 @@ import parseMovieData from './parseMovieData';
 import { cdaClient, DEFAULT_CONTENTFUL_LIMIT } from '../../utils/contentful';
 import { PaginationOptions } from '../../types/pagination';
 import { DataWithPaginationResponse } from '../../types/apiResponse';
-import { MovieModel } from './type';
+import { MovieSummary } from './type';
 
 type QueryParamOptions = PaginationOptions & {
 	genre?: string;
@@ -13,7 +13,7 @@ export default async function getAll({
 	limit = DEFAULT_CONTENTFUL_LIMIT,
 	page = 1,
 	search,
-}: QueryParamOptions): Promise<DataWithPaginationResponse<MovieModel>> {
+}: QueryParamOptions): Promise<DataWithPaginationResponse<MovieSummary>> {
 	const skip = (page - 1) * limit;
 
 	const entries = await cdaClient.getEntries({

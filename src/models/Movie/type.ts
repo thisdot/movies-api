@@ -17,4 +17,6 @@ export type MovieModel = {
 	writers: string[];
 };
 
+export type MovieSummary = Pick<MovieModel, 'id' | 'title' | 'posterUrl' | 'rating'>;
+
 export type MovieContentfulEntry = Entry<EntrySkeletonType<FieldsType, string>, undefined, string>;
