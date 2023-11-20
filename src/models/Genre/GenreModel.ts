@@ -1,5 +1,5 @@
 import { Entry, EntrySkeletonType, FieldsType } from 'contentful';
-import { MovieModel } from '../Movie/type';
+import { Movie } from '../Movie/type';
 
 export type GenreContentfulEntry = Entry<EntrySkeletonType<FieldsType, string>, undefined, string>;
 
@@ -8,7 +8,7 @@ export const GENRE_CONTENT_TYPE = 'genre';
 export type Genre = {
 	id: string;
 	title: string | null;
-	movies: Array<GenreMovie> | Array<MovieModel>;
+	movies: Array<Partial<Movie>>;
 };
 
 // Might want to add more fields here in the future
@@ -29,12 +29,12 @@ export default class GenreModel {
 		this.entry.fields.title = value;
 	}
 
-	public get movies(): Array<GenreMovie> {
+	public get movies(): Array<Pick<Movie, 'id'>> {
 		return ((this.entry.fields?.movies as Array<GenreContentfulEntry>) || []).map((movie) => ({
 			id: movie.sys.id,
 		}));
 	}
-	public set movies(value: Array<GenreMovie>) {
+	public set movies(value: Array<Pick<Movie, 'id'>>) {
 		this.entry.fields.movies = value.map((movie) => ({
 			sys: { id: movie.id },
 		}));

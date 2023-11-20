@@ -1,6 +1,6 @@
 import { Entry, EntrySkeletonType, FieldsType } from 'contentful';
 
-export type MovieModel = {
+export type Movie = {
 	id: string;
 	title: string;
 	posterUrl: string;
@@ -17,6 +17,6 @@ export type MovieModel = {
 	writers: string[];
 };
 
-export type MovieSummary = Pick<MovieModel, 'id' | 'title' | 'posterUrl' | 'rating'>;
+export type MovieSummary = Pick<Movie, 'id' | 'title' | 'posterUrl' | 'rating'>;
 
 export type MovieContentfulEntry = Entry<EntrySkeletonType<FieldsType, string>, undefined, string>;

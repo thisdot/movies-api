@@ -2,10 +2,10 @@ import sortBy from 'lodash/sortBy';
 import getAllMovies from '../../models/Movie/getAll';
 import { APIGatewayProxyHandler } from 'aws-lambda';
 import getAllGenres from '../../models/Genre/getAll';
-import { MovieModel } from '../../models/Movie/type';
+import { Movie } from '../../models/Movie/type';
 import { DEFAULT_CONTENTFUL_LIMIT } from '../../utils/contentful';
 import { CONTENTFUL_INCLUDE } from '../../types/contentful';
-import { serverErrorResponse } from '../../utils/api/apiResponses';
+import { notFoundResponse, serverErrorResponse } from '../../utils/api/apiResponses';
 
 export const handler: APIGatewayProxyHandler = async (event) => {
 	try {
@@ -49,11 +49,15 @@ export const handler: APIGatewayProxyHandler = async (event) => {
 				},
 			});
 
-			let parsedMovies: MovieModel[] = moviesWithGenreEntries.data[0].movies as MovieModel[];
+			if (!moviesWithGenreEntries.data.length) {
+				return notFoundResponse;
+			}
+
+			let parsedMovies: Movie[] = moviesWithGenreEntries.data[0].movies as Movie[];
 
 			// filter by search if received from call
 			if (searchFilters.search) {
-				parsedMovies = (moviesWithGenreEntries.data[0].movies as MovieModel[]).filter((movie) =>
+				parsedMovies = (moviesWithGenreEntries.data[0].movies as Movie[]).filter((movie) =>
 					movie.title?.toLowerCase().includes(searchFilters.search?.toLowerCase() || '')
 				);
 			}
@@ -83,15 +87,6 @@ export const handler: APIGatewayProxyHandler = async (event) => {
 		};
 	} catch (error: unknown) {
 		console.error('Error fetching movies:', error);
-		if (error instanceof Error) {
-			return {
-				statusCode: 500,
-				body: JSON.stringify({
-					message: error.message,
-				}),
-			};
-		} else {
-			return serverErrorResponse;
-		}
+		return serverErrorResponse;
 	}
 };
