@@ -1,8 +1,8 @@
 import { DataWithPaginationResponse } from '../../types/apiResponse';
 import { ContentfulIncludeOptions, CONTENTFUL_INCLUDE } from '../../types/contentful';
-import { PaginationOptions } from '../../types/pagination';
 import { cdaClient, DEFAULT_CONTENTFUL_LIMIT } from '../../utils/contentful';
-import { Genre } from './GenreModel';
+import { PaginationOptions } from '../../types/pagination';
+import { Genre, GenreContentfulEntry } from './GenreModel';
 import parseGenre from './parseGenre';
 
 type GetAllOptions = PaginationOptions & {
@@ -31,10 +31,12 @@ export default async function getAll({
 			order: ['fields.title'],
 			include,
 			...(id && { 'sys.id': id }),
-			...(title && { 'fields.title': title }),
+			...(title && { 'fields.title[match]': title }),
 		});
 
-		const data = response.items.map((entry) => parseGenre(entry));
+		const data = response.items.map((entry) =>
+			parseGenre(entry as GenreContentfulEntry, include > 0)
+		);
 		return { data, totalPages: Math.ceil(response.total / limit) };
 	} catch (err) {
 		console.error(err);
