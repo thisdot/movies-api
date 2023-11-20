@@ -35,7 +35,7 @@ export default async function getAll({
 		});
 
 		const data = response.items.map((entry) =>
-			parseGenre(entry as GenreContentfulEntry, include && include > 0)
+			parseGenre(entry as GenreContentfulEntry, include > 0)
 		);
 		return { data, totalPages: Math.ceil(response.total / limit) };
 	} catch (err) {

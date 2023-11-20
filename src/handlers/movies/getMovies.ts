@@ -1,9 +1,11 @@
 import sortBy from 'lodash/sortBy';
 import getAllMovies from '../../models/Movie/getAll';
 import { APIGatewayProxyHandler } from 'aws-lambda';
-import getAllGenres, { ContentfulIncludeOptions } from '../../models/Genre/getAll';
+import getAllGenres from '../../models/Genre/getAll';
 import { MovieModel } from '../../models/Movie/type';
 import { DEFAULT_CONTENTFUL_LIMIT } from '../../utils/contentful';
+import { CONTENTFUL_INCLUDE } from '../../types/contentful';
+import { serverErrorResponse } from '../../utils/api/apiResponses';
 
 export const handler: APIGatewayProxyHandler = async (event) => {
 	try {
@@ -41,7 +43,7 @@ export const handler: APIGatewayProxyHandler = async (event) => {
 		if (searchFilters.genre) {
 			// 	we need to use the other getAll function because we need to filter by genre and Contentful doesn't support filtering by reference fields many to many
 			const moviesWithGenreEntries = await getAllGenres({
-				include: ContentfulIncludeOptions.moviesWithGenre,
+				include: CONTENTFUL_INCLUDE.moviesWithGenre,
 				query: {
 					title: searchFilters.genre,
 				},
@@ -89,10 +91,7 @@ export const handler: APIGatewayProxyHandler = async (event) => {
 				}),
 			};
 		} else {
-			return {
-				statusCode: 500,
-				body: 'Internal Server Error',
-			};
+			return serverErrorResponse;
 		}
 	}
 };

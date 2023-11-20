@@ -55,6 +55,7 @@ functions:
     events:
       - http:
           path: /movies
+          method: get
           cors: true
   genreById:
     handler: src/handlers/genreById.handler
