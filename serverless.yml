@@ -25,6 +25,26 @@ provider:
 
 # The `functions` block defines what code to deploy
 functions:
+  # auth functions & APIs
+  simpleAuthorizerFunc:
+    handler: src/handlers/auth/authorizer.handler
+  getValidToken:
+    handler: src/handlers/auth/getValidToken.handler
+    events:
+      - http:
+          path: auth/token
+          method: get
+          cors: true
+
+  # healthcheck - check status of the app
+  healthcheck:
+    handler: src/handlers/healthcheck.handler
+    events:
+      - http:
+          path: healthcheck
+          method: get
+
+  # graphql
   graphql:
     handler: src/handlers/graphql.server
     events:
@@ -38,25 +58,26 @@ functions:
           cors: true
     environment:
       SLS_STAGE: ${sls:stage}
-  healthcheck:
-    handler: src/handlers/healthcheck.handler
-    events:
-      - http:
-          path: healthcheck
-          method: get
+
+  # RESTful APIs
   moviesByGenre:
     handler: src/handlers/genres/moviesByGenre.handler
     events:
       - http:
           path: genres/movies
           method: get
+          cors: true
+          authorizer:
+            name: simpleAuthorizerFunc
   movies:
     handler: src/handlers/movies/getMovies.handler
     events:
       - http:
-          path: /movies
+          path: movies
           method: get
           cors: true
+          authorizer:
+            name: simpleAuthorizerFunc
   movieById:
     handler: src/handlers/movies/movieById.handler
     events:
@@ -64,6 +85,8 @@ functions:
           path: movies/{id}
           method: get
           cors: true
+          authorizer:
+            name: simpleAuthorizerFunc
   movieTitles:
     handler: src/handlers/movies/getMovieTitles.handler
     events:
@@ -71,6 +94,8 @@ functions:
           path: movies/titles
           method: get
           cors: true
+          authorizer:
+            name: simpleAuthorizerFunc
   genreById:
     handler: src/handlers/genres/genreById.handler
     events:
@@ -78,3 +103,5 @@ functions:
           path: movies/genres/{id}
           method: get
           cors: true
+          authorizer:
+            name: simpleAuthorizerFunc
