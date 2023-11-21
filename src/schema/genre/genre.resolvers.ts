@@ -12,9 +12,19 @@ export const genreResolvers: Resolvers = {
 			}
 			return genre;
 		},
-		genres: async (_parent, { limit, page }) => {
-			const response = await getAll({ limit: limit || DEFAULT_CONTENTFUL_LIMIT, page: page || 1 });
-			return response.data || [];
+		genres: async (_parent, { pagination }) => {
+			const perPage = pagination?.perPage || DEFAULT_CONTENTFUL_LIMIT;
+			const page = pagination?.page || 1;
+			const response = await getAll({
+				limit: perPage,
+				page: page,
+			});
+			return {
+				page,
+				perPage,
+				totalPages: response.totalPages,
+				nodes: response.data || [],
+			};
 		},
 	},
 };

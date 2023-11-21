@@ -11,9 +11,14 @@ export const genreTypeDefs = gql`
 		movies: [MovieInGenre]
 	}
 
+	type GenreConnection {
+		nodes: [Genre!]
+		pagination: Pagination
+	}
+
 	type Query {
 		"Genre: GET"
 		genre(id: ID!): Genre
-		genres(page: Int, limit: Int): [Genre!]
+		genres(pagination: PaginationInput): GenreConnection
 	}
 `;
