@@ -39,6 +39,7 @@ export const apolloServer = new ApolloServer<MyContext>({
 
 export const server = startServerAndCreateLambdaHandler<MyContext>(apolloServer, {
 	context: async ({ event }) => {
+		// ref: https://www.apollographql.com/docs/apollo-server/security/authentication/#api-wide-authorization
 		const authorization = event.headers?.['Authorization'] || '';
 
 		if (!authorization) {
