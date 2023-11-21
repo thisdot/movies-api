@@ -1,6 +1,7 @@
 import { mergeResolvers, mergeTypeDefs } from '@graphql-tools/merge';
-import { technologyResolvers, technologyTypeDefs } from './technology';
+import { genreResolvers, genreTypeDefs } from './genre';
+import { paginationTypeDefs } from './pagination.typedefs';
 
-export const typeDefs = mergeTypeDefs([technologyTypeDefs]);
+export const typeDefs = mergeTypeDefs([paginationTypeDefs, genreTypeDefs]);
 
-export const resolvers = mergeResolvers([technologyResolvers]);
+export const resolvers = mergeResolvers([genreResolvers]);
