@@ -1,9 +1,11 @@
 import { ApolloServer, BaseContext } from '@apollo/server';
 import { startServerAndCreateLambdaHandler } from '@as-integrations/aws-lambda';
+import { GraphQLError } from 'graphql';
+import { Maybe } from '../generated/graphql';
 import { resolvers, typeDefs } from '../schema';
 import { Genre } from '../types/genre';
 import { Movie } from '../types/movie';
-import { Maybe } from '../generated/graphql';
+import { isTokenValid } from '../utils/api/apiAuth';
 
 export interface MyContext extends BaseContext {
 	dataSources: {
@@ -36,5 +38,24 @@ export const apolloServer = new ApolloServer<MyContext>({
 });
 
 export const server = startServerAndCreateLambdaHandler<MyContext>(apolloServer, {
-	context: async () => ({ dataSources: { genres: [], movies: [], genre: null, movie: null } }),
+	context: async ({ event }) => {
+		const authorization = event.headers?.['Authorization'] || '';
+
+		if (!authorization) {
+			throw new GraphQLError('User is not authorized to access this resource', {
+				extensions: { code: 'UNAUTHENTICATED', http: { status: 401 } },
+			});
+		}
+
+		// removing the initial "Bearer "
+		const token = authorization.substring(7);
+		const isAuthorized = isTokenValid(token);
+		if (!isAuthorized) {
+			throw new GraphQLError('User is not authorized to access this resource', {
+				extensions: { code: 'FORBIDDEN', http: { status: 403 } },
+			});
+		}
+
+		return { dataSources: { genres: [], movies: [], genre: null, movie: null } };
+	},
 });
