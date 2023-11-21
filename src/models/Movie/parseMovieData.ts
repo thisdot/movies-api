@@ -1,10 +1,11 @@
 import { Movie, MovieSummary } from './type';
 import { GenreContentfulEntry } from '../Genre/GenreModel';
 
-// TODO: Fix contentful types, take out the any
+// TODO: Fix contentful types, take out the unknown
 
 // Function to parse basic movie data (MovieSummary)
-export function parseMovieSummary(entry: any): MovieSummary {
+export function parseMovieSummary(entry: unknown): MovieSummary {
+	// @ts-ignore
 	const { sys, fields } = entry;
 
 	return {
@@ -16,8 +17,9 @@ export function parseMovieSummary(entry: any): MovieSummary {
 }
 
 // Function to parse detailed movie data (MovieModel)
-export function parseMovie(entry: any): Movie {
+export function parseMovie(entry: unknown): Movie {
 	const summary = parseMovieSummary(entry);
+	// @ts-ignore
 	const { fields } = entry;
 
 	return {

@@ -7,8 +7,12 @@ import { isCustomContentfulError } from '../../utils/api/utils';
 export const handler: APIGatewayProxyHandler = async (event) => {
 	const movieId = event?.pathParameters?.id;
 
+	if (!movieId) {
+		return notFoundResponse;
+	}
+
 	try {
-		const movie = await getMovieById(movieId || '', {
+		const movie = await getMovieById(movieId, {
 			include: CONTENTFUL_INCLUDE.genres,
 		});
 
