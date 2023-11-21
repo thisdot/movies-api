@@ -5,7 +5,7 @@ import {
 } from '../../types/contentful';
 import { cdaClient } from '../../utils/contentful';
 import { Genre, GENRE_CONTENT_TYPE } from './GenreModel';
-import parseGenre from './parseGenre';
+import { parseGenreWithMovieIds } from './parseGenre';
 
 type GetByIdOptions = {
 	include?: ContentfulIncludeOptions;
@@ -23,7 +23,7 @@ export default async function getById(
 			return null;
 		}
 
-		return parseGenre(response);
+		return parseGenreWithMovieIds(response);
 	} catch (err) {
 		// Contentful throws error when NotFound, let's transform into an empty return
 		// so the controller handles the 404 there

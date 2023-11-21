@@ -1,5 +1,7 @@
 import { Entry, EntrySkeletonType, FieldsType } from 'contentful';
 
+export const MOVIE_CONTENT_TYPE = 'movie';
+
 export type Movie = {
 	id: string;
 	title: string;
