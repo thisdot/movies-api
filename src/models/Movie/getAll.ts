@@ -24,7 +24,7 @@ export default async function getAll({
 		'fields.title[match]': search,
 	});
 
-	const parsedMovies = entries.items.map((entry) => parseMovieSummary(entry));
+	const parsedMovies = entries.items.map(parseMovieSummary);
 	const totalPages = Math.ceil(entries.total / limit);
 
 	return { data: parsedMovies, totalPages };

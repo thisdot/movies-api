@@ -16,7 +16,7 @@ export function parseMovieSummary(entry: any): MovieSummary {
 }
 
 // Function to parse detailed movie data (MovieModel)
-export function parseMovieModel(entry: any): Movie {
+export function parseMovie(entry: any): Movie {
 	const summary = parseMovieSummary(entry);
 	const { fields } = entry;
 
