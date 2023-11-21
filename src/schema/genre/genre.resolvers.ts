@@ -20,10 +20,12 @@ export const genreResolvers: Resolvers = {
 				page: page,
 			});
 			return {
-				page,
-				perPage,
-				totalPages: response.totalPages,
 				nodes: response.data || [],
+				pagination: {
+					page,
+					perPage,
+					totalPages: response.totalPages,
+				},
 			};
 		},
 	},
