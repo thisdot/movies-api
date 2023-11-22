@@ -35,9 +35,8 @@ export default async function getAll({
 
 	const shouldParseMovie = !isNil(include) && include > 0;
 	const parseFunction = shouldParseMovie ? parseMovie : parseMovieSummary;
-	const includeMoviesInGenres = shouldParseMovie && include > 1;
 
-	const parsedMovies = entries.items.map((entry) => parseFunction(entry, includeMoviesInGenres));
+	const parsedMovies = entries.items.map(parseFunction);
 
 	const totalPages = Math.ceil(entries.total / limit);
 

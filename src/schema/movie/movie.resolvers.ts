@@ -9,7 +9,7 @@ export const movieResolvers: Resolvers = {
 	Query: {
 		movie: async (_parent, { id }) => {
 			const movie = await getMovieById(id, {
-				include: CONTENTFUL_INCLUDE.genresWithMovies,
+				include: CONTENTFUL_INCLUDE.genres,
 			});
 			if (!movie) {
 				throw new Error('Not Found');
@@ -47,7 +47,7 @@ export const movieResolvers: Resolvers = {
 			const response = await getAllMovies({
 				limit: perPage,
 				page: page,
-				include: CONTENTFUL_INCLUDE.genresWithMovies,
+				include: CONTENTFUL_INCLUDE.genres,
 				...(search && { search }),
 			});
 			return {

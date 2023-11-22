@@ -19,11 +19,10 @@ export function parseMovie(entry: MovieContentfulEntry): Movie {
 
 	return {
 		...parseMovieFields(entry),
-		genres:
-			(fields.genres as GenreContentfulEntry[]).map((genre: GenreContentfulEntry) => ({
-				id: genre.sys.id,
-				title: genre.fields.title,
-			})) || [],
+		genres: (fields.genres as GenreContentfulEntry[]).map((genre: GenreContentfulEntry) => ({
+			id: genre.sys.id,
+			title: genre.fields.title,
+		})),
 	};
 }
 
