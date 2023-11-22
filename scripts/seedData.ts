@@ -3,7 +3,7 @@ import fs from 'fs';
 import { join, dirname } from 'path';
 import { fileURLToPath } from 'url';
 import * as dotenv from 'dotenv';
-import { MovieModel } from '../src/models/Movie/type';
+import { MovieModel } from '../src/types/movie';
 
 type GenreMap = {
 	[genre: string]: string;

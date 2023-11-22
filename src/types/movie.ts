@@ -1,5 +1,3 @@
-import { Entry, EntrySkeletonType, FieldsType } from 'contentful';
-
 export const MOVIE_CONTENT_TYPE = 'movie';
 
 export type Movie = {
@@ -20,5 +18,3 @@ export type Movie = {
 };
 
 export type MovieSummary = Pick<Movie, 'id' | 'title' | 'posterUrl' | 'rating'>;
-
-export type MovieContentfulEntry = Entry<EntrySkeletonType<FieldsType, string>, undefined, string>;

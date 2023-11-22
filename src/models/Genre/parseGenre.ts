@@ -1,11 +1,11 @@
-import { Genre, GenreContentfulEntry } from './GenreModel';
+import { GenreContentfulEntry, MovieContentfulEntry } from '../../types/contentful';
+import { Genre } from '../../types/genre';
 import { parseMovieSummary } from '../Movie/parseMovieData';
-import { MovieContentfulEntry } from '../Movie/type';
 
 export function parseGenreWithMovieData(entry: GenreContentfulEntry): Genre {
 	return {
 		id: entry.sys.id,
-		title: entry.fields.title as string,
+		title: entry.fields.title,
 		movies: ((entry.fields?.movies as MovieContentfulEntry[]) || []).map(parseMovieSummary),
 	};
 }
@@ -13,7 +13,7 @@ export function parseGenreWithMovieData(entry: GenreContentfulEntry): Genre {
 export function parseGenreWithMovieIds(entry: GenreContentfulEntry): Genre {
 	return {
 		id: entry.sys.id,
-		title: entry.fields.title as string,
+		title: entry.fields.title,
 		movies: ((entry.fields?.movies as MovieContentfulEntry[]) || []).map((movie) => ({
 			id: movie.sys.id,
 		})),

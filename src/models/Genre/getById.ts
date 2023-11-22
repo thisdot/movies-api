@@ -1,10 +1,11 @@
 import {
-	ContentfulIncludeOptions,
 	CONTENTFUL_INCLUDE,
+	ContentfulIncludeOptions,
 	CustomContentfulError,
+	GenreEntrySkeleton,
 } from '../../types/contentful';
+import { GENRE_CONTENT_TYPE, Genre } from '../../types/genre';
 import { cdaClient } from '../../utils/contentful';
-import { Genre, GENRE_CONTENT_TYPE } from './GenreModel';
 import { parseGenreWithMovieIds } from './parseGenre';
 
 type GetByIdOptions = {
@@ -17,7 +18,7 @@ export default async function getById(
 ): Promise<Genre | null> {
 	try {
 		// Contenful getEntry doesn't specify contentType, need to check its return
-		const response = await cdaClient.getEntry(id, { include });
+		const response = await cdaClient.getEntry<GenreEntrySkeleton>(id, { include });
 
 		if (response?.sys?.contentType?.sys?.id !== GENRE_CONTENT_TYPE) {
 			return null;

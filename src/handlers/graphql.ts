@@ -1,7 +1,7 @@
 import { ApolloServer, BaseContext } from '@apollo/server';
 import { startServerAndCreateLambdaHandler } from '@as-integrations/aws-lambda';
 import { resolvers, typeDefs } from '../schema';
-import { Genre } from '../models/Genre/GenreModel';
+import { Genre } from '../types/genre';
 
 export interface MyContext extends BaseContext {
 	dataSources: {
