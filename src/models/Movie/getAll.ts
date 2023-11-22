@@ -1,11 +1,10 @@
-import isNil from "lodash/isNil";
-import { DataWithPaginationResponse } from "../../types/apiResponse";
-import { ContentfulIncludeOptions, MovieEntrySkeleton } from "../../types/contentful";
-import { MovieSummary } from "../../types/movie";
-import { PaginationOptions } from "../../types/pagination";
-import { DEFAULT_CONTENTFUL_LIMIT, cdaClient } from "../../utils/contentful";
-import { parseMovie, parseMovieSummary } from "./parseMovieData";
-
+import isNil from 'lodash/isNil';
+import { DataWithPaginationResponse } from '../../types/apiResponse';
+import { ContentfulIncludeOptions, MovieEntrySkeleton } from '../../types/contentful';
+import { Movie } from '../../types/movie';
+import { PaginationOptions } from '../../types/pagination';
+import { DEFAULT_CONTENTFUL_LIMIT, cdaClient } from '../../utils/contentful';
+import { parseMovie, parseMovieSummary } from './parseMovieData';
 
 type QueryParamOptions = PaginationOptions & {
 	search?: string;
@@ -19,7 +18,7 @@ export default async function getAll({
 	search,
 	include,
 	select,
-}: QueryParamOptions): Promise<DataWithPaginationResponse<MovieSummary>> {
+}: QueryParamOptions): Promise<DataWithPaginationResponse<Partial<Movie>>> {
 	const skip = Math.max(0, (page - 1) * limit);
 
 	const entries = await cdaClient.getEntries<MovieEntrySkeleton>({

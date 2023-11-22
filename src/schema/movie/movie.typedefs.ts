@@ -15,7 +15,7 @@ export const movieTypeDefs = gql`
 		bestRating: Float
 		worstRating: Float
 		writers: [String]
-		genres: [Genre]
+		genres: [GenreWithoutMovies]
 	}
 
 	type MovieConnection {
@@ -23,9 +23,14 @@ export const movieTypeDefs = gql`
 		pagination: Pagination
 	}
 
+	input MovieFilterInput {
+		search: String
+		genre: String
+	}
+
 	type Query {
 		"Movie: GET"
 		movie(id: ID!): Movie
-		movies(pagination: PaginationInput): MovieConnection
+		movies(pagination: PaginationInput, where: MovieFilterInput): MovieConnection
 	}
 `;

@@ -7,6 +7,17 @@ export const genreTypeDefs = gql`
 		movies: [Movie]
 	}
 
+	type GenreWithoutMovies {
+		id: ID
+		title: String
+	}
+
+	type Genre {
+		id: ID
+		title: String
+		movies: [Movie]
+	}
+
 	type GenreConnection {
 		nodes: [Genre!]
 		pagination: Pagination

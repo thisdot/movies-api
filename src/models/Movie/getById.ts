@@ -1,9 +1,11 @@
-import isNil from "lodash/isNil";
-import { ContentfulIncludeOptions, CONTENTFUL_INCLUDE, MovieEntrySkeleton } from "../../types/contentful";
-import { Movie, MOVIE_CONTENT_TYPE } from "../../types/movie";
-import { cdaClient } from "../../utils/contentful";
-import { parseMovie } from "./parseMovieData";
-
+import {
+	ContentfulIncludeOptions,
+	CONTENTFUL_INCLUDE,
+	MovieEntrySkeleton,
+} from '../../types/contentful';
+import { Movie, MOVIE_CONTENT_TYPE } from '../../types/movie';
+import { cdaClient } from '../../utils/contentful';
+import { parseMovie } from './parseMovieData';
 
 type QueryParamOptions = {
 	include?: ContentfulIncludeOptions;
@@ -20,9 +22,7 @@ export default async function getById(
 		return null;
 	}
 
-	const includeMoviesInGenres = !isNil(include) && include > 1;
-
-	const parsedMovie = parseMovie(response, includeMoviesInGenres);
+	const parsedMovie = parseMovie(response);
 
 	return parsedMovie;
 }
