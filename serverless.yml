@@ -45,7 +45,7 @@ functions:
           path: healthcheck
           method: get
   moviesByGenre:
-    handler: src/handlers/moviesByGenre.handler
+    handler: src/handlers/genres/moviesByGenre.handler
     events:
       - http:
           path: genre/movies
@@ -65,7 +65,7 @@ functions:
           method: get
           cors: true
   genreById:
-    handler: src/handlers/genreById.handler
+    handler: src/handlers/genres/genreById.handler
     events:
       - http:
           path: movies/genres/{id}
