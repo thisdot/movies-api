@@ -7,8 +7,3 @@ export type Genre = {
 	title: string | null;
 	movies: Array<Partial<Movie>>;
 };
-
-// Might want to add more fields here in the future
-export type GenreMovie = {
-	id: string;
-};
