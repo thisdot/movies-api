@@ -45,10 +45,10 @@ functions:
           path: healthcheck
           method: get
   moviesByGenre:
-    handler: src/handlers/moviesByGenre.handler
+    handler: src/handlers/genres/moviesByGenre.handler
     events:
       - http:
-          path: genre/movies
+          path: genres/movies
           method: get
   movies:
     handler: src/handlers/movies/getMovies.handler
@@ -64,8 +64,15 @@ functions:
           path: movies/{id}
           method: get
           cors: true
+  movieTitles:
+    handler: src/handlers/movies/getMovieTitles.handler
+    events:
+      - http:
+          path: movies/titles
+          method: get
+          cors: true
   genreById:
-    handler: src/handlers/genreById.handler
+    handler: src/handlers/genres/genreById.handler
     events:
       - http:
           path: movies/genres/{id}

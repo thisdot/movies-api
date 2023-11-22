@@ -1,30 +1,26 @@
-import { Movie, MovieSummary, MovieContentfulEntry } from './type';
-import { GenreContentfulEntry } from '../Genre/GenreModel';
-
-// TODO: Fix contentful types, take out the unknown
+import { MovieContentfulEntry, GenreContentfulEntry } from "../../types/contentful";
+import { MovieSummary, Movie } from "../../types/movie";
 
 // Function to parse basic movie data (MovieSummary)
-export function parseMovieSummary(entry: unknown): MovieSummary {
-	// @ts-ignore
+export function parseMovieSummary(entry: MovieContentfulEntry): MovieSummary {
 	const { sys, fields } = entry;
 
 	return {
 		id: sys.id,
-		title: fields.title || '',
-		posterUrl: fields.posterUrl || '',
-		rating: fields.rating || '',
+		title: fields.title,
+		posterUrl: fields.posterUrl,
+		rating: fields.rating,
 	};
 }
 
 // Function to parse detailed movie data (MovieModel)
-export function parseMovie(entry: unknown, includeMoviesInGenre?: boolean): Movie {
-	// @ts-ignore
+export function parseMovie(entry: MovieContentfulEntry, includeMoviesInGenre?: boolean): Movie {
 	const { fields } = entry;
 
 	return {
 		...parseMovieFields(entry),
 		genres:
-			fields.genres.map((genre: GenreContentfulEntry) => ({
+			(fields.genres as GenreContentfulEntry[]).map((genre: GenreContentfulEntry) => ({
 				id: genre.sys.id,
 				title: genre.fields.title,
 				...(includeMoviesInGenre && {
@@ -35,9 +31,8 @@ export function parseMovie(entry: unknown, includeMoviesInGenre?: boolean): Movi
 }
 
 //Helper function to parse the movie data
-function parseMovieFields(entry: unknown): Omit<Movie, 'genres'> {
+function parseMovieFields(entry: MovieContentfulEntry): Omit<Movie, 'genres'> {
 	const summary = parseMovieSummary(entry);
-	// @ts-ignore
 	const { fields } = entry;
 
 	return {

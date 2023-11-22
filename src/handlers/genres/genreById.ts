@@ -1,7 +1,7 @@
 import { APIGatewayProxyHandler } from 'aws-lambda';
-import getGenreById from '../models/Genre/getById';
-import { GenreResponse } from '../types/apiResponse';
-import { notFoundResponse, serverErrorResponse } from '../utils/api/apiResponses';
+import getGenreById from '../../models/Genre/getById';
+import { GenreResponse } from '../../types/apiResponse';
+import { notFoundResponse, serverErrorResponse } from '../../utils/api/apiResponses';
 
 export const handler: APIGatewayProxyHandler = async (event) => {
 	const genreId = event?.pathParameters?.id;

@@ -1,8 +1,8 @@
 import { ApolloServer, BaseContext } from '@apollo/server';
 import { startServerAndCreateLambdaHandler } from '@as-integrations/aws-lambda';
 import { resolvers, typeDefs } from '../schema';
-import { Genre } from '../models/Genre/GenreModel';
-import { Movie } from '../models/Movie/type';
+import { Genre } from '../types/genre';
+import { Movie } from '../types/movie';
 import { Maybe } from '../generated/graphql';
 
 export interface MyContext extends BaseContext {

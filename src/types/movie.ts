@@ -1,6 +1,6 @@
-import { Entry, EntrySkeletonType, FieldsType } from 'contentful';
-import { Genre } from '../Genre/GenreModel';
-import { Maybe } from '../../generated/graphql';
+import { Maybe } from "../generated/graphql";
+import { Genre } from "./genre";
+
 
 export const MOVIE_CONTENT_TYPE = 'movie';
 
@@ -22,5 +22,3 @@ export type Movie = {
 };
 
 export type MovieSummary = Pick<Movie, 'id' | 'title' | 'posterUrl' | 'rating'>;
-
-export type MovieContentfulEntry = Entry<EntrySkeletonType<FieldsType, string>, undefined, string>;
