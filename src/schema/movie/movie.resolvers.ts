@@ -1,33 +1,35 @@
 import { Resolvers } from '../../generated/graphql';
-import getAll from '../../models/Genre/getAll';
-import getById from '../../models/Genre/getById';
 import { DEFAULT_CONTENTFUL_LIMIT } from '../../utils/contentful';
+import getAllMovies from '../../models/Movie/getAll';
 import { CONTENTFUL_INCLUDE } from '../../types/contentful';
+import getMovieById from '../../models/Movie/getById';
 
-export const genreResolvers: Resolvers = {
+export const movieResolvers: Resolvers = {
 	Query: {
-		genre: async (_parent, { id }) => {
-			const genre = await getById(id);
-			if (!genre) {
+		movie: async (_parent, { id }) => {
+			const movie = await getMovieById(id, {
+				include: CONTENTFUL_INCLUDE.genresWithMovies,
+			});
+			if (!movie) {
 				throw new Error('Not Found');
 			}
-			return genre;
+			return movie;
 		},
-		genres: async (_parent, { pagination }) => {
+		movies: async (_parent, { pagination }) => {
 			const perPage = pagination?.perPage || DEFAULT_CONTENTFUL_LIMIT;
 			const page = pagination?.page || 1;
-			const response = await getAll({
+			const response = await getAllMovies({
 				limit: perPage,
 				page: page,
-				include: CONTENTFUL_INCLUDE.movies,
+				include: CONTENTFUL_INCLUDE.genresWithMovies,
 			});
 			return {
-				nodes: response.data || [],
 				pagination: {
 					page,
 					perPage,
 					totalPages: response.totalPages,
 				},
+				nodes: response.data || [],
 			};
 		},
 	},

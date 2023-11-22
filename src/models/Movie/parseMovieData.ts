@@ -1,4 +1,4 @@
-import { Movie, MovieSummary } from './type';
+import { Movie, MovieSummary, MovieContentfulEntry } from './type';
 import { GenreContentfulEntry } from '../Genre/GenreModel';
 
 // TODO: Fix contentful types, take out the unknown
@@ -17,7 +17,25 @@ export function parseMovieSummary(entry: unknown): MovieSummary {
 }
 
 // Function to parse detailed movie data (MovieModel)
-export function parseMovie(entry: unknown): Movie {
+export function parseMovie(entry: unknown, includeMoviesInGenre?: boolean): Movie {
+	// @ts-ignore
+	const { fields } = entry;
+
+	return {
+		...parseMovieFields(entry),
+		genres:
+			fields.genres.map((genre: GenreContentfulEntry) => ({
+				id: genre.sys.id,
+				title: genre.fields.title,
+				...(includeMoviesInGenre && {
+					movies: (genre.fields?.movies as MovieContentfulEntry[])?.map(parseMovieFields),
+				}),
+			})) || [],
+	};
+}
+
+//Helper function to parse the movie data
+function parseMovieFields(entry: unknown): Omit<Movie, 'genres'> {
 	const summary = parseMovieSummary(entry);
 	// @ts-ignore
 	const { fields } = entry;
@@ -28,10 +46,8 @@ export function parseMovie(entry: unknown): Movie {
 		duration: fields.duration || '',
 		directors: fields.directors || [],
 		mainActors: fields.mainActors || [],
-		genres: ((fields.genres as Array<GenreContentfulEntry>) || [])?.map(
-			(genre) => (genre.fields?.title as string) || ''
-		),
 		datePublished: fields.datePublished || '',
+		rating: fields.rating || '',
 		ratingValue: fields.ratingValue || 0,
 		bestRating: fields.bestRating || 0,
 		worstRating: fields.worstRating || 0,

@@ -20,7 +20,7 @@ export default async function getAll({
 	query = {},
 }: GetAllOptions = {}): Promise<DataWithPaginationResponse<Genre>> {
 	const { id, title } = query;
-	const skip = (page - 1) * limit;
+	const skip = Math.max(0, (page - 1) * limit);
 
 	try {
 		const response = await cdaClient.getEntries({

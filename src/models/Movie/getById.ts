@@ -2,6 +2,7 @@ import { parseMovie } from './parseMovieData';
 import { cdaClient } from '../../utils/contentful';
 import { Movie, MOVIE_CONTENT_TYPE } from './type';
 import { CONTENTFUL_INCLUDE, ContentfulIncludeOptions } from '../../types/contentful';
+import isNil from 'lodash/isNil';
 
 type QueryParamOptions = {
 	include?: ContentfulIncludeOptions;
@@ -18,7 +19,9 @@ export default async function getById(
 		return null;
 	}
 
-	const parsedMovie = parseMovie(response);
+	const includeMoviesInGenres = !isNil(include) && include > 1;
+
+	const parsedMovie = parseMovie(response, includeMoviesInGenres);
 
 	return parsedMovie;
 }

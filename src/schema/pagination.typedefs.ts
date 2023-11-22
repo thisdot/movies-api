@@ -5,7 +5,6 @@ export const paginationTypeDefs = gql`
 		page: Int
 		perPage: Int
 	}
-
 	type Pagination {
 		page: Int!
 		perPage: Int!
