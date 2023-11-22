@@ -9,7 +9,6 @@ export type Genre = {
 	id: string;
 	title: string | null;
 	movies: Partial<Movie>[];
-	// movies: Movie[];
 };
 
 export default class GenreModel {
