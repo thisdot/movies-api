@@ -48,7 +48,7 @@ functions:
     handler: src/handlers/genres/moviesByGenre.handler
     events:
       - http:
-          path: genre/movies
+          path: genres/movies
           method: get
   movies:
     handler: src/handlers/movies/getMovies.handler
@@ -62,6 +62,13 @@ functions:
     events:
       - http:
           path: movies/{id}
+          method: get
+          cors: true
+  movieTitles:
+    handler: src/handlers/movies/getMovieTitles.handler
+    events:
+      - http:
+          path: movies/titles
           method: get
           cors: true
   genreById:
