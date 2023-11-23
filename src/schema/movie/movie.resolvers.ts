@@ -1,9 +1,9 @@
-import { Resolvers } from '../../generated/graphql';
-import { DEFAULT_CONTENTFUL_LIMIT } from '../../utils/contentful';
-import getAllMovies from '../../models/Movie/getAll';
-import { CONTENTFUL_INCLUDE } from '../../types/contentful';
-import getMovieById from '../../models/Movie/getById';
-import { fetchMoviesByGenre } from '../../handlers/movies/getMovies';
+import { Resolvers } from '@generated/graphql';
+import { DEFAULT_CONTENTFUL_LIMIT } from '@utils/contentful';
+import { CONTENTFUL_INCLUDE } from '@customTypes/contentful';
+import getAllMovies from '@models/Movie/getAll';
+import getMovieById from '@models/Movie/getById';
+import { fetchMoviesByGenre } from '@handlers/movies/getMovies';
 
 export const movieResolvers: Resolvers = {
 	Query: {

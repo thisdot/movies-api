@@ -1,5 +1,5 @@
 import { APIGatewayProxyHandler } from 'aws-lambda';
-import { getRandomValidToken } from '../../utils/api/apiAuth';
+import { getRandomValidToken } from '@utils/api/apiAuth';
 
 export const handler: APIGatewayProxyHandler = async () => {
 	const validToken = getRandomValidToken();
