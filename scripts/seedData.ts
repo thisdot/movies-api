@@ -3,7 +3,7 @@ import fs from 'fs';
 import { join, dirname } from 'path';
 import { fileURLToPath } from 'url';
 import * as dotenv from 'dotenv';
-import { MovieModel } from '../src/types/movie';
+import { Movie } from '@customTypes/movie';
 
 type GenreMap = {
 	[genre: string]: string;
@@ -56,7 +56,7 @@ const createGenreEntries = async (environment: Environment, genres: string[]) =>
 
 const createMovieEntries = async (
 	environment: Environment,
-	movie: MovieModel,
+	movie: Movie,
 	genreEntries: GenreMap
 ) => {
 	console.log(`Creating movie entry for ${movie.title}...`);
@@ -160,7 +160,7 @@ const importDataToContentful = async () => {
 		const environment = await space.getEnvironment(environmentId);
 
 		const allGenres = new Set<string>();
-		seedData.forEach((movie: MovieModel) => movie.genres.forEach((genre) => allGenres.add(genre)));
+		seedData.forEach((movie: Movie) => movie.genres.forEach((genre) => allGenres.add(genre)));
 		const genreEntries: GenreMap = await createGenreEntries(environment, Array.from(allGenres));
 
 		// After creating all movies, update genres with the new movies

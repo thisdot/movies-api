@@ -1,4 +1,4 @@
-import { Maybe } from '../generated/graphql';
+import { Maybe } from '@generated/graphql';
 import { Genre } from './genre';
 
 export const MOVIE_CONTENT_TYPE = 'movie';

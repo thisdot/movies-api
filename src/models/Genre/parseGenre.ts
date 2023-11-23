@@ -2,9 +2,9 @@ import {
 	ContentfulIncludeOptions,
 	GenreContentfulEntry,
 	MovieContentfulEntry,
-} from '../../types/contentful';
-import { Genre } from '../../types/genre';
-import { parseMovie, parseMovieSummary } from '../Movie/parseMovieData';
+} from '@customTypes/contentful';
+import { Genre } from '@customTypes/genre';
+import { parseMovie, parseMovieSummary } from '@models/Movie/parseMovieData';
 
 export function parseGenreWithMovieData(
 	entry: GenreContentfulEntry,

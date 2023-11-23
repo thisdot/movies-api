@@ -1,11 +1,11 @@
 import { ApolloServer, BaseContext } from '@apollo/server';
 import { startServerAndCreateLambdaHandler } from '@as-integrations/aws-lambda';
 import { GraphQLError } from 'graphql';
-import { Maybe } from '../generated/graphql';
+import { Maybe } from '@generated/graphql';
 import { resolvers, typeDefs } from '../schema';
-import { Genre } from '../types/genre';
-import { Movie } from '../types/movie';
-import { isTokenValid } from '../utils/api/apiAuth';
+import { isTokenValid } from '@utils/api/apiAuth';
+import { Genre } from '@customTypes/genre';
+import { Movie } from '@customTypes/movie';
 
 export interface MyContext extends BaseContext {
 	dataSources: {

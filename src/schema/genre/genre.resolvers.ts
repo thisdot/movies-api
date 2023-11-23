@@ -1,8 +1,8 @@
-import { Resolvers } from '../../generated/graphql';
-import getAll from '../../models/Genre/getAll';
-import getById from '../../models/Genre/getById';
-import { DEFAULT_CONTENTFUL_LIMIT } from '../../utils/contentful';
-import { CONTENTFUL_INCLUDE } from '../../types/contentful';
+import { Resolvers } from '@generated/graphql';
+import { DEFAULT_CONTENTFUL_LIMIT } from '@utils/contentful';
+import { CONTENTFUL_INCLUDE } from '@customTypes/contentful';
+import getById from '@models/Genre/getById';
+import getAll from '@models/Genre/getAll';
 
 export const genreResolvers: Resolvers = {
 	Query: {

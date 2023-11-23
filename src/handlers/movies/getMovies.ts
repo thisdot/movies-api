@@ -1,11 +1,11 @@
 import sortBy from 'lodash/sortBy';
-import getAllMovies from '../../models/Movie/getAll';
 import { APIGatewayProxyHandler } from 'aws-lambda';
-import getAllGenres from '../../models/Genre/getAll';
-import { Movie } from '../../types/movie';
-import { DEFAULT_CONTENTFUL_LIMIT } from '../../utils/contentful';
+import getAllMovies from '@models/Movie/getAll';
+import getAllGenres from '@models/Genre/getAll';
+import { Movie } from '@customTypes/movie';
+import { DEFAULT_CONTENTFUL_LIMIT } from '@utils/contentful';
 import { CONTENTFUL_INCLUDE, ContentfulIncludeOptions } from '../../types/contentful';
-import { notFoundResponse, serverErrorResponse } from '../../utils/api/apiResponses';
+import { notFoundResponse, serverErrorResponse } from '@utils/api/apiResponses';
 
 type SearchFilters = {
 	page?: number;

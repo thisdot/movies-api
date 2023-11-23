@@ -1,12 +1,12 @@
-import { DataWithPaginationResponse } from '../../types/apiResponse';
+import { DataWithPaginationResponse } from '@customTypes/apiResponse';
 import {
 	ContentfulIncludeOptions,
 	CONTENTFUL_INCLUDE,
 	GenreEntrySkeleton,
-} from '../../types/contentful';
-import { cdaClient, DEFAULT_CONTENTFUL_LIMIT } from '../../utils/contentful';
-import { PaginationOptions } from '../../types/pagination';
-import { Genre } from '../../types/genre';
+} from '@customTypes/contentful';
+import { cdaClient, DEFAULT_CONTENTFUL_LIMIT } from '@utils/contentful';
+import { PaginationOptions } from '@customTypes/pagination';
+import { Genre } from '@customTypes/genre';
 import { parseGenreWithMovieIds, parseGenreWithMovieData } from './parseGenre';
 
 type GetAllOptions = PaginationOptions & {

@@ -3,9 +3,9 @@ import {
 	ContentfulIncludeOptions,
 	CustomContentfulError,
 	GenreEntrySkeleton,
-} from '../../types/contentful';
-import { GENRE_CONTENT_TYPE, Genre } from '../../types/genre';
-import { cdaClient } from '../../utils/contentful';
+} from '@customTypes/contentful';
+import { GENRE_CONTENT_TYPE, Genre } from '@customTypes/genre';
+import { cdaClient } from '@utils/contentful';
 import { parseGenreWithMovieIds } from './parseGenre';
 
 type GetByIdOptions = {

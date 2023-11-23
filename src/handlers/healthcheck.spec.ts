@@ -1,6 +1,6 @@
 import { APIGatewayProxyEvent, Context, Callback, APIGatewayProxyResult } from 'aws-lambda';
 import { handler, HealthCheckResult } from './healthcheck';
-import { getContentfulHealth } from '../utils/contentful';
+import { getContentfulHealth } from '@utils/contentful';
 
 const MOCK_GET_CONTENTFUL_HEALTH = getContentfulHealth as jest.Mock;
 

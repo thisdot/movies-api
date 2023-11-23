@@ -1,8 +1,8 @@
 import { APIGatewayProxyHandler } from 'aws-lambda';
-import { notFoundResponse, serverErrorResponse } from '../../utils/api/apiResponses';
-import getMovieById from '../../models/Movie/getById';
-import { CONTENTFUL_INCLUDE } from '../../types/contentful';
-import { isCustomContentfulError } from '../../utils/api/utils';
+import { notFoundResponse, serverErrorResponse } from '@utils/api/apiResponses';
+import getMovieById from '@models/Movie/getById';
+import { CONTENTFUL_INCLUDE } from '@customTypes/contentful';
+import { isCustomContentfulError } from '@utils/api/utils';
 
 export const handler: APIGatewayProxyHandler = async (event) => {
 	const movieId = event?.pathParameters?.id;
