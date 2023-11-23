@@ -1,12 +1,21 @@
-import { GenreContentfulEntry, MovieContentfulEntry } from '../../types/contentful';
+import {
+	ContentfulIncludeOptions,
+	GenreContentfulEntry,
+	MovieContentfulEntry,
+} from '../../types/contentful';
 import { Genre } from '../../types/genre';
-import { parseMovieSummary } from '../Movie/parseMovieData';
+import { parseMovie, parseMovieSummary } from '../Movie/parseMovieData';
 
-export function parseGenreWithMovieData(entry: GenreContentfulEntry): Genre {
+export function parseGenreWithMovieData(
+	entry: GenreContentfulEntry,
+	include: ContentfulIncludeOptions
+): Genre {
+	const parseMethod = include > 1 ? parseMovie : parseMovieSummary;
+
 	return {
 		id: entry.sys.id,
 		title: entry.fields.title,
-		movies: ((entry.fields?.movies as MovieContentfulEntry[]) || []).map(parseMovieSummary),
+		movies: ((entry.fields?.movies as MovieContentfulEntry[]) || []).map(parseMethod),
 	};
 }
 

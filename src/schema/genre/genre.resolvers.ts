@@ -2,6 +2,7 @@ import { Resolvers } from '../../generated/graphql';
 import getAll from '../../models/Genre/getAll';
 import getById from '../../models/Genre/getById';
 import { DEFAULT_CONTENTFUL_LIMIT } from '../../utils/contentful';
+import { CONTENTFUL_INCLUDE } from '../../types/contentful';
 
 export const genreResolvers: Resolvers = {
 	Query: {
@@ -18,6 +19,7 @@ export const genreResolvers: Resolvers = {
 			const response = await getAll({
 				limit: perPage,
 				page: page,
+				include: CONTENTFUL_INCLUDE.movies,
 			});
 			return {
 				nodes: response.data || [],

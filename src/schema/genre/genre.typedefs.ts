@@ -1,14 +1,21 @@
 import gql from 'graphql-tag';
 
 export const genreTypeDefs = gql`
-	type MovieInGenre {
-		id: ID!
+	type Genre {
+		id: ID
+		title: String
+		movies: [Movie]
+	}
+
+	type GenreWithoutMovies {
+		id: ID
+		title: String
 	}
 
 	type Genre {
-		id: ID!
+		id: ID
 		title: String
-		movies: [MovieInGenre]
+		movies: [Movie]
 	}
 
 	type GenreConnection {

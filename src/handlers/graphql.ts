@@ -2,10 +2,15 @@ import { ApolloServer, BaseContext } from '@apollo/server';
 import { startServerAndCreateLambdaHandler } from '@as-integrations/aws-lambda';
 import { resolvers, typeDefs } from '../schema';
 import { Genre } from '../types/genre';
+import { Movie } from '../types/movie';
+import { Maybe } from '../generated/graphql';
 
 export interface MyContext extends BaseContext {
 	dataSources: {
 		genres: Genre[];
+		movies: Movie[];
+		genre: Maybe<Genre>;
+		movie: Maybe<Movie>;
 	};
 }
 export const apolloServer = new ApolloServer<MyContext>({
@@ -31,5 +36,5 @@ export const apolloServer = new ApolloServer<MyContext>({
 });
 
 export const server = startServerAndCreateLambdaHandler<MyContext>(apolloServer, {
-	context: async () => ({ dataSources: { genres: [] } }),
+	context: async () => ({ dataSources: { genres: [], movies: [], genre: null, movie: null } }),
 });

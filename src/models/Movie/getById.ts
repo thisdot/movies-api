@@ -1,11 +1,11 @@
 import {
-	CONTENTFUL_INCLUDE,
 	ContentfulIncludeOptions,
+	CONTENTFUL_INCLUDE,
 	MovieEntrySkeleton,
 } from '../../types/contentful';
+import { Movie, MOVIE_CONTENT_TYPE } from '../../types/movie';
 import { cdaClient } from '../../utils/contentful';
 import { parseMovie } from './parseMovieData';
-import { Movie, MOVIE_CONTENT_TYPE } from '../../types/movie';
 
 type QueryParamOptions = {
 	include?: ContentfulIncludeOptions;

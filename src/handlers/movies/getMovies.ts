@@ -4,8 +4,16 @@ import { APIGatewayProxyHandler } from 'aws-lambda';
 import getAllGenres from '../../models/Genre/getAll';
 import { Movie } from '../../types/movie';
 import { DEFAULT_CONTENTFUL_LIMIT } from '../../utils/contentful';
-import { CONTENTFUL_INCLUDE } from '../../types/contentful';
+import { CONTENTFUL_INCLUDE, ContentfulIncludeOptions } from '../../types/contentful';
 import { notFoundResponse, serverErrorResponse } from '../../utils/api/apiResponses';
+
+type SearchFilters = {
+	page?: number;
+	limit?: number;
+	genre?: string;
+	search?: string;
+	include?: ContentfulIncludeOptions;
+};
 
 export const handler: APIGatewayProxyHandler = async (event) => {
 	try {
@@ -41,40 +49,20 @@ export const handler: APIGatewayProxyHandler = async (event) => {
 		}
 
 		if (searchFilters.genre) {
-			// 	we need to use the other getAll function because we need to filter by genre and Contentful doesn't support filtering by reference fields many to many
-			const moviesWithGenreEntries = await getAllGenres({
-				include: CONTENTFUL_INCLUDE.moviesWithGenre,
-				query: {
-					title: searchFilters.genre,
-				},
+			const response = await fetchMoviesByGenre({
+				...searchFilters,
+				include: CONTENTFUL_INCLUDE.movies,
 			});
 
-			if (!moviesWithGenreEntries.data.length) {
+			if (!response) {
 				return notFoundResponse;
 			}
-
-			let parsedMovies: Movie[] = moviesWithGenreEntries.data[0].movies as Movie[];
-
-			// filter by search if received from call
-			if (searchFilters.search) {
-				parsedMovies = (moviesWithGenreEntries.data[0].movies as Movie[]).filter((movie) =>
-					movie.title?.toLowerCase().includes(searchFilters.search?.toLowerCase() || '')
-				);
-			}
-
-			// sort for output and prepare pagination
-			const sortedMovies = sortBy(parsedMovies, 'title');
-
-			// apply pagination
-			const { page = 1, limit = DEFAULT_CONTENTFUL_LIMIT } = searchFilters;
-
-			const result = sortedMovies.slice((page - 1) * limit, page * limit);
 
 			return {
 				statusCode: 200,
 				body: JSON.stringify({
-					data: result,
-					totalPages: Math.ceil(sortedMovies.length / limit),
+					data: response.result,
+					totalPages: response.totalPages,
 				}),
 			};
 		}
@@ -90,3 +78,36 @@ export const handler: APIGatewayProxyHandler = async (event) => {
 		return serverErrorResponse;
 	}
 };
+
+export async function fetchMoviesByGenre(searchFilters: SearchFilters) {
+	if (!searchFilters.genre) {
+		return null;
+	}
+
+	const moviesWithGenreEntries = await getAllGenres({
+		include: searchFilters.include ?? CONTENTFUL_INCLUDE.noInclude,
+		query: { title: searchFilters.genre },
+	});
+
+	if (!moviesWithGenreEntries.data.length) {
+		return null;
+	}
+
+	let parsedMovies = moviesWithGenreEntries.data[0].movies as Movie[];
+
+	// Filter by search query
+	if (searchFilters.search) {
+		const searchLower = searchFilters.search.toLowerCase();
+		parsedMovies = parsedMovies.filter((movie) => movie.title?.toLowerCase().includes(searchLower));
+	}
+
+	// Sort and apply pagination
+	const sortedMovies = sortBy(parsedMovies, 'title');
+	const { page = 1, limit = DEFAULT_CONTENTFUL_LIMIT } = searchFilters;
+	const paginatedMovies = sortedMovies.slice((page - 1) * limit, page * limit);
+
+	return {
+		result: paginatedMovies,
+		totalPages: Math.ceil(sortedMovies.length / limit),
+	};
+}

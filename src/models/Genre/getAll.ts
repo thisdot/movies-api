@@ -24,7 +24,7 @@ export default async function getAll({
 	query = {},
 }: GetAllOptions = {}): Promise<DataWithPaginationResponse<Genre>> {
 	const { id, title } = query;
-	const skip = (page - 1) * limit;
+	const skip = Math.max(0, (page - 1) * limit);
 
 	try {
 		const response = await cdaClient.getEntries<GenreEntrySkeleton>({
@@ -41,7 +41,7 @@ export default async function getAll({
 
 		const data = response.items.map((entry) => {
 			if (include > 0) {
-				return parseGenreWithMovieData(entry);
+				return parseGenreWithMovieData(entry, include);
 			}
 
 			return parseGenreWithMovieIds(entry);
