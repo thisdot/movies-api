@@ -33,15 +33,15 @@ function parseMovieFields(entry: MovieContentfulEntry): Omit<Movie, 'genres'> {
 
 	return {
 		...summary,
-		summary: fields.summary || '',
-		duration: fields.duration || '',
-		directors: fields.directors || [],
-		mainActors: fields.mainActors || [],
-		datePublished: fields.datePublished || '',
-		rating: fields.rating || '',
-		ratingValue: fields.ratingValue || 0,
-		bestRating: fields.bestRating || 0,
-		worstRating: fields.worstRating || 0,
-		writers: fields.writers || [],
+		summary: fields.summary,
+		duration: fields.duration,
+		directors: fields.directors,
+		mainActors: fields.mainActors,
+		datePublished: fields.datePublished,
+		rating: fields.rating,
+		ratingValue: fields.ratingValue,
+		bestRating: fields.bestRating,
+		worstRating: fields.worstRating,
+		writers: fields.writers,
 	};
 }
