@@ -2,7 +2,7 @@
 
 ## Overview
 
-Welcome to the [Project Name] repository! This open-source project provides a comprehensive API (both GraphQL and RESTful) for accessing a wide range of movie data. Whether you're looking for a specific title or exploring different genres, our API makes it easy to access the information you need.
+Welcome to the `movies-api` repository! This open-source project provides a comprehensive API (both GraphQL and RESTful) for accessing a wide range of movie data. Whether you're looking for a specific title or exploring different genres, our API makes it easy to access the information you need.
 
 ## Features
 
