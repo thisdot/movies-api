@@ -4,7 +4,7 @@ import getAllMovies from '@models/Movie/getAll';
 import getAllGenres from '@models/Genre/getAll';
 import { Movie } from '@customTypes/movie';
 import { DEFAULT_CONTENTFUL_LIMIT } from '@utils/contentful';
-import { CONTENTFUL_INCLUDE, ContentfulIncludeOptions } from '../../types/contentful';
+import { CONTENTFUL_INCLUDE, ContentfulIncludeOptions } from '@customTypes/contentful';
 import { notFoundResponse, serverErrorResponse } from '@utils/api/apiResponses';
 
 type SearchFilters = {

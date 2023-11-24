@@ -1,4 +1,5 @@
 import { EntryCollection, EntryFieldTypes, Entry } from 'contentful';
+import { Link } from 'contentful-management';
 
 export const CONTENTFUL_INCLUDE = {
 	noInclude: 0, // this adds at least the linked IDs
@@ -23,6 +24,7 @@ export type CustomContentfulError = Error & {
 	};
 };
 
+export type GenreLink = Link<'Entry'>;
 export type GenreEntrySkeleton = {
 	contentTypeId: 'genre';
 	fields: {
@@ -33,6 +35,12 @@ export type GenreEntrySkeleton = {
 export type GenreContentfulEntryCollection = EntryCollection<GenreEntrySkeleton, undefined, string>;
 export type GenreContentfulEntry = Entry<GenreEntrySkeleton, undefined, string>;
 
+export type ContentfulGenreEntryFields = {
+	title: string;
+	movies: MovieLink[];
+};
+
+export type MovieLink = Link<'Entry'>;
 export type MovieEntrySkeleton = {
 	contentTypeId: 'movie';
 	fields: {
@@ -53,3 +61,19 @@ export type MovieEntrySkeleton = {
 };
 export type MovieContentfulEntryCollection = EntryCollection<MovieEntrySkeleton, undefined, string>;
 export type MovieContentfulEntry = Entry<MovieEntrySkeleton, undefined, string>;
+
+export type ContentfulMovieEntryFields = {
+	title: string;
+	posterUrl?: string | null;
+	summary?: string | null;
+	duration?: string | null;
+	directors?: string[] | null;
+	mainActors?: string[] | null;
+	genres?: GenreLink[] | null;
+	datePublished?: string | null;
+	rating?: string | null;
+	ratingValue?: number | null;
+	bestRating?: number | null;
+	worstRating?: number | null;
+	writers?: string[] | null;
+};
