@@ -11,8 +11,10 @@ frameworkVersion: '3'
 useDotenv: true
 
 plugins:
-  - serverless-offline
+  # https://www.serverless.com/plugins/serverless-plugin-typescript - typescript must precede offline
   - serverless-plugin-typescript
+  - serverless-tscpaths
+  - serverless-offline
   - serverless-dotenv-plugin
 
 # The `provider` block defines where your service will be deployed
