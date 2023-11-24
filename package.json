@@ -10,7 +10,7 @@
 		"deploy": "sls deploy",
 		"format": "prettier --write \"**/*.{ts,js,json,md}\"",
 		"ts:check": "tsc --noEmit",
-		"codegen": "ts-node -r tsconfig-paths/register node_modules/.bin/graphql-codegen --config codegen.ts",
+		"codegen": "graphql-codegen --config codegen.ts",
 		"db:seed": "npm run codegen && ts-node -r tsconfig-paths/register ./scripts/seedData.ts"
 	},
 	"keywords": [
