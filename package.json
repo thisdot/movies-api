@@ -4,7 +4,7 @@
   "description": "Serverless Framework, Apollo Server, and Contentful CMS",
   "main": "src/handlers/graphql.ts",
   "scripts": {
-    "dev": "ts-node -r tsconfig-paths/register node_modules/.bin/serverless offline start",
+  	"dev": "sls offline start",
     "test": "npm run codegen && jest",
     "lint": "eslint . --ext .ts",
     "deploy": "sls deploy",
