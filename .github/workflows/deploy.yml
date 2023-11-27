@@ -45,4 +45,4 @@ jobs:
           cat .env
 
       - name: Deploy
-        run: npm run deploy --stage production --region us-east-1
+        run: npm run deploy -- --stage production --region us-east-1
