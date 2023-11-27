@@ -8,6 +8,7 @@
 		"test": "npm run codegen && jest",
 		"lint": "eslint . --ext .ts",
 		"deploy": "sls deploy",
+		"teardown": "sls remove",
 		"format": "prettier --write \"**/*.{ts,js,json,md}\"",
 		"ts:check": "tsc --noEmit",
 		"codegen": "graphql-codegen --config codegen.ts",
@@ -25,6 +26,7 @@
 	"dependencies": {
 		"@apollo/server": "4.3.0",
 		"@as-integrations/aws-lambda": "1.2.1",
+		"@graphql-tools/merge": "8.3.15",
 		"aws-sdk": "2.1306.0",
 		"contentful": "^10.6.9",
 		"contentful-management": "10.26.0",
@@ -40,7 +42,6 @@
 		"@graphql-codegen/typescript": "2.8.7",
 		"@graphql-codegen/typescript-resolvers": "2.7.12",
 		"@graphql-tools/executor": "0.0.12",
-		"@graphql-tools/merge": "8.3.15",
 		"@types/aws-lambda": "8.10.109",
 		"@types/jest": "29.2.5",
 		"@types/node": "18.11.18",

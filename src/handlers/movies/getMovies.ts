@@ -5,7 +5,11 @@ import getAllGenres from '@models/Genre/getAll';
 import { Movie } from '@customTypes/movie';
 import { DEFAULT_CONTENTFUL_LIMIT } from '@utils/contentful';
 import { CONTENTFUL_INCLUDE, ContentfulIncludeOptions } from '@customTypes/contentful';
-import { notFoundResponse, serverErrorResponse } from '@utils/api/apiResponses';
+import {
+	mountSuccessResponse,
+	notFoundResponse,
+	serverErrorResponse,
+} from '@utils/api/apiResponses';
 
 type SearchFilters = {
 	page?: number;
@@ -58,21 +62,12 @@ export const handler: APIGatewayProxyHandler = async (event) => {
 				return notFoundResponse;
 			}
 
-			return {
-				statusCode: 200,
-				body: JSON.stringify({
-					data: response.result,
-					totalPages: response.totalPages,
-				}),
-			};
+			return mountSuccessResponse({ data: response?.result, totalPages: response?.totalPages });
 		}
 
 		const entries = await getAllMovies(searchFilters);
 
-		return {
-			statusCode: 200,
-			body: JSON.stringify(entries),
-		};
+		return mountSuccessResponse(entries);
 	} catch (error: unknown) {
 		console.error('Error fetching movies:', error);
 		return serverErrorResponse;
