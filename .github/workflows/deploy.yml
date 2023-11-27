@@ -30,7 +30,7 @@ jobs:
       - name: Create AWS profile
         uses: Fooji/create-aws-profile-action@v1
         with:
-          profile: default
+          profile: moviesApi
           region: us-east-1
           key: ${{ secrets.AWS_ACCESS_KEY }}
           secret: ${{ secrets.AWS_SECRET_KEY }}
