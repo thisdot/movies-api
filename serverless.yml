@@ -12,10 +12,16 @@ useDotenv: true
 
 plugins:
   # https://www.serverless.com/plugins/serverless-plugin-typescript - typescript must precede offline
-  - serverless-plugin-typescript
-  - serverless-tscpaths
+  - serverless-esbuild
   - serverless-offline
-  - serverless-dotenv-plugin
+
+custom:
+  esbuild:
+    bundle: true
+    minify: false
+
+package:
+  individually: true
 
 # The `provider` block defines where your service will be deployed
 provider:
@@ -23,6 +29,8 @@ provider:
   profile: moviesApi
   deploymentMethod: direct
   runtime: nodejs18.x
+  memorySize: 512
+  timeout: 10
   environment:
     CONTENTFUL_SPACE_ID: ${env:CONTENTFUL_SPACE_ID}
     CONTENTFUL_DELIVERY_API_TOKEN: ${env:CONTENTFUL_DELIVERY_API_TOKEN}
@@ -31,16 +39,19 @@ provider:
     authorizers:
       simpleAuthorizerFunc:
         type: request
-        identitySource: 
+        identitySource:
           - $request.header.Authorization
         functionName: customAuthorizer
   iam:
     role:
       statements:
-        - Effect: Allow 
+        - Effect: Allow
           Action:
             - lambda:InvokeFunction
           Resource: arn:aws:lambda:*:*:*
+  tracing:
+    apiGateway: true
+    lambda: true
 
 # The `functions` block defines what code to deploy
 functions:
@@ -85,6 +96,7 @@ functions:
           method: get
           authorizer:
             name: simpleAuthorizerFunc
+
   movies:
     handler: src/handlers/movies/getMovies.handler
     events:
@@ -93,6 +105,7 @@ functions:
           method: get
           authorizer:
             name: simpleAuthorizerFunc
+
   movieById:
     handler: src/handlers/movies/movieById.handler
     events:
@@ -101,6 +114,7 @@ functions:
           method: get
           authorizer:
             name: simpleAuthorizerFunc
+
   movieTitles:
     handler: src/handlers/movies/getMovieTitles.handler
     events:
@@ -109,6 +123,7 @@ functions:
           method: get
           authorizer:
             name: simpleAuthorizerFunc
+
   genreById:
     handler: src/handlers/genres/genreById.handler
     events:
