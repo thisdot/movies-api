@@ -22,6 +22,10 @@ jest.mock('@models/Genre/getById', () => ({
 describe('genreById', () => {
 	const successResponse = {
 		statusCode: 200,
+		headers: {
+			'Access-Control-Allow-Origin': '*',
+			'Access-Control-Allow-Credentials': true,
+		},
 		body: JSON.stringify({ id: 'aFakeIdSuccess', title: 'aFakeTitle', totalMovies: 0 }),
 	};
 	const scenarios: [string, string, object][] = [
