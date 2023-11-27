@@ -1,7 +1,11 @@
 import { APIGatewayProxyHandler } from 'aws-lambda';
 import getGenreById from '@models/Genre/getById';
 import { GenreResponse } from '@customTypes/apiResponse';
-import { notFoundResponse, serverErrorResponse } from '@utils/api/apiResponses';
+import {
+	mountSuccessResponse,
+	notFoundResponse,
+	serverErrorResponse,
+} from '@utils/api/apiResponses';
 
 export const handler: APIGatewayProxyHandler = async (event) => {
 	const genreId = event?.pathParameters?.id;
@@ -25,10 +29,7 @@ export const handler: APIGatewayProxyHandler = async (event) => {
 			totalMovies: movies?.length || 0,
 		};
 
-		return {
-			statusCode: 200,
-			body: JSON.stringify(result),
-		};
+		return mountSuccessResponse(result);
 	} catch (err) {
 		return serverErrorResponse;
 	}

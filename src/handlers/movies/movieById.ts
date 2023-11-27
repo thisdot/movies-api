@@ -1,5 +1,9 @@
 import { APIGatewayProxyHandler } from 'aws-lambda';
-import { notFoundResponse, serverErrorResponse } from '@utils/api/apiResponses';
+import {
+	mountSuccessResponse,
+	notFoundResponse,
+	serverErrorResponse,
+} from '@utils/api/apiResponses';
 import getMovieById from '@models/Movie/getById';
 import { CONTENTFUL_INCLUDE } from '@customTypes/contentful';
 import { isCustomContentfulError } from '@utils/api/utils';
@@ -16,10 +20,11 @@ export const handler: APIGatewayProxyHandler = async (event) => {
 			include: CONTENTFUL_INCLUDE.genres,
 		});
 
-		return {
-			statusCode: 200,
-			body: JSON.stringify(movie),
-		};
+		if (!movie) {
+			return notFoundResponse;
+		}
+
+		return mountSuccessResponse(movie);
 	} catch (error: unknown) {
 		console.error('Error fetching movies:', error);
 

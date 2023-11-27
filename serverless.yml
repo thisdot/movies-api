@@ -21,44 +21,58 @@ plugins:
 provider:
   name: aws
   profile: moviesApi
+  deploymentMethod: direct
   runtime: nodejs18.x
   environment:
     CONTENTFUL_SPACE_ID: ${env:CONTENTFUL_SPACE_ID}
     CONTENTFUL_DELIVERY_API_TOKEN: ${env:CONTENTFUL_DELIVERY_API_TOKEN}
+  httpApi:
+    cors: true
+    authorizers:
+      simpleAuthorizerFunc:
+        type: request
+        identitySource: 
+          - $request.header.Authorization
+        functionName: customAuthorizer
+  iam:
+    role:
+      statements:
+        - Effect: Allow 
+          Action:
+            - lambda:InvokeFunction
+          Resource: arn:aws:lambda:*:*:*
 
 # The `functions` block defines what code to deploy
 functions:
   # auth functions & APIs
-  simpleAuthorizerFunc:
+  customAuthorizer:
     handler: src/handlers/auth/authorizer.handler
+
   getValidToken:
     handler: src/handlers/auth/getValidToken.handler
     events:
-      - http:
-          path: auth/token
+      - httpApi:
+          path: /auth/token
           method: get
-          cors: true
 
   # healthcheck - check status of the app
   healthcheck:
     handler: src/handlers/healthcheck.handler
     events:
-      - http:
-          path: healthcheck
+      - httpApi:
+          path: /healthcheck
           method: get
 
   # graphql
   graphql:
     handler: src/handlers/graphql.server
     events:
-      - http:
-          path: graphql
+      - httpApi:
+          path: /graphql
           method: post
-          cors: true
-      - http:
-          path: graphql
+      - httpApi:
+          path: /graphql
           method: get
-          cors: true
     environment:
       SLS_STAGE: ${sls:stage}
 
@@ -66,45 +80,40 @@ functions:
   moviesByGenre:
     handler: src/handlers/genres/moviesByGenre.handler
     events:
-      - http:
-          path: genres/movies
+      - httpApi:
+          path: /genres/movies
           method: get
-          cors: true
           authorizer:
             name: simpleAuthorizerFunc
   movies:
     handler: src/handlers/movies/getMovies.handler
     events:
-      - http:
-          path: movies
+      - httpApi:
+          path: /movies
           method: get
-          cors: true
           authorizer:
             name: simpleAuthorizerFunc
   movieById:
     handler: src/handlers/movies/movieById.handler
     events:
-      - http:
-          path: movies/{id}
+      - httpApi:
+          path: /movies/{id}
           method: get
-          cors: true
           authorizer:
             name: simpleAuthorizerFunc
   movieTitles:
     handler: src/handlers/movies/getMovieTitles.handler
     events:
-      - http:
-          path: movies/titles
+      - httpApi:
+          path: /movies/titles
           method: get
-          cors: true
           authorizer:
             name: simpleAuthorizerFunc
   genreById:
     handler: src/handlers/genres/genreById.handler
     events:
-      - http:
-          path: movies/genres/{id}
+      - httpApi:
+          path: /movies/genres/{id}
           method: get
-          cors: true
           authorizer:
             name: simpleAuthorizerFunc

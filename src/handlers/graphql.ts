@@ -28,19 +28,19 @@ export const apolloServer = new ApolloServer<MyContext>({
 			message = error.message;
 		}
 
-		if (process.env.SLS_STAGE !== 'prod') {
+		if (process.env.SLS_STAGE !== 'production') {
 			return { ...formattedError, message };
 		}
 
 		return { message: message.message || message };
 	},
-	introspection: process.env.SLS_STAGE !== 'prod',
+	introspection: true,
 });
 
 export const server = startServerAndCreateLambdaHandler<MyContext>(apolloServer, {
 	context: async ({ event }) => {
 		// ref: https://www.apollographql.com/docs/apollo-server/security/authentication/#api-wide-authorization
-		const authorization = event.headers?.['Authorization'] || '';
+		const authorization = event.headers?.['authorization'] || '';
 
 		if (!authorization) {
 			throw new GraphQLError('User is not authorized to access this resource', {
