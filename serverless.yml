@@ -20,6 +20,7 @@ plugins:
 # The `provider` block defines where your service will be deployed
 provider:
   name: aws
+  profile: moviesApi
   runtime: nodejs18.x
   environment:
     CONTENTFUL_SPACE_ID: ${env:CONTENTFUL_SPACE_ID}

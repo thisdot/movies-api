@@ -1,0 +1,48 @@
+name: Deploy Serverless Framework
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    name: deploy
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [18.x]
+
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v3
+
+      - name: Configure Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18.x'
+          cache: 'npm'
+
+      - name: Install packages
+        run: npm ci
+
+      - name: Create AWS profile
+        uses: Fooji/create-aws-profile-action@v1
+        with:
+          profile: moviesApi
+          region: us-east-1
+          key: ${{ secrets.AWS_ACCESS_KEY }}
+          secret: ${{ secrets.AWS_SECRET_KEY }}
+
+      - name: Create .env file for deployment
+        run: |
+          touch .env
+          echo CONTENTFUL_CONTENT_MANAGEMENT_API_TOKEN=${{ secrets.CONTENTFUL_CONTENT_MANAGEMENT_API_TOKEN }} >> .env
+          echo CONTENTFUL_DELIVERY_API_TOKEN=${{ secrets.CONTENTFUL_DELIVERY_API_TOKEN }} >> .env
+          echo CONTENTFUL_SPACE_ID=${{ secrets.CONTENTFUL_SPACE_ID }} >> .env
+          echo CONTENTFUL_ENVIRONMENT=${{ secrets.CONTENTFUL_ENVIRONMENT }} >> .env
+          cat .env
+
+      - name: Deploy
+        run: npm run deploy --stage production --region us-east-1
