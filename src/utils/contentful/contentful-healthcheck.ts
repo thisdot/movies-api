@@ -1,9 +1,9 @@
-import { getCMAEnvironment } from './contentful';
+import { cdaClient } from './contentful';
 
 export const getContentfulHealth = async () => {
 	try {
-		await getCMAEnvironment();
-		return true;
+		const cdaSpace = await cdaClient.getSpace();
+		return !!cdaSpace?.name;
 	} catch {
 		return false;
 	}

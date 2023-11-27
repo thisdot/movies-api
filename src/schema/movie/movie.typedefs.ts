@@ -29,8 +29,10 @@ export const movieTypeDefs = gql`
 	}
 
 	type Query {
-		"Movie: GET"
+		"Single Movie by ID"
 		movie(id: ID!): Movie
+
+		"Paginated list of Movies with simple search"
 		movies(pagination: PaginationInput, where: MovieFilterInput): MovieConnection
 	}
 `;

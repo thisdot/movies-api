@@ -1,7 +1,7 @@
 {
 	"name": "movies-api",
 	"version": "0.1.0",
-	"description": "Serverless Framework, Apollo Server, and Contentful CMS",
+	"description": "RESTful and GraphQL APIs for movies catalog",
 	"main": "src/handlers/graphql.ts",
 	"scripts": {
 		"dev": "sls offline start",
@@ -18,9 +18,7 @@
 		"apollo-server",
 		"contentful",
 		"jest",
-		"typescript",
-		"redis",
-		"aws-sqs"
+		"typescript"
 	],
 	"author": "This Dot Labs",
 	"license": "MIT",

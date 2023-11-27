@@ -24,8 +24,10 @@ export const genreTypeDefs = gql`
 	}
 
 	type Query {
-		"Genre: GET"
+		"Single Genre by ID"
 		genre(id: ID!): Genre
+
+		"Paginated list of Genres"
 		genres(pagination: PaginationInput): GenreConnection
 	}
 `;
