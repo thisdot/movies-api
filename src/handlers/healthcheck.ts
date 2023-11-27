@@ -1,5 +1,5 @@
 import { APIGatewayProxyHandler } from 'aws-lambda';
-import { getContentfulHealth } from '../utils/contentful';
+import { getContentfulHealth } from '@utils/contentful';
 
 export type HealthCheckResult = {
 	contentful: boolean;

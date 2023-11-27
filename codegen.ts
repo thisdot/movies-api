@@ -12,6 +12,7 @@ const config: CodegenConfig = {
 			plugins: ['introspection'],
 		},
 	},
+	require: ['tsconfig-paths/register'],
 };
 
 export default config;

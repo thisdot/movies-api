@@ -1,9 +1,9 @@
 import isNil from 'lodash/isNil';
-import { DataWithPaginationResponse } from '../../types/apiResponse';
-import { ContentfulIncludeOptions, MovieEntrySkeleton } from '../../types/contentful';
-import { Movie } from '../../types/movie';
-import { PaginationOptions } from '../../types/pagination';
-import { DEFAULT_CONTENTFUL_LIMIT, cdaClient } from '../../utils/contentful';
+import { DataWithPaginationResponse } from '@customTypes/apiResponse';
+import { ContentfulIncludeOptions, MovieEntrySkeleton } from '@customTypes/contentful';
+import { Movie } from '@customTypes/movie';
+import { PaginationOptions } from '@customTypes/pagination';
+import { DEFAULT_CONTENTFUL_LIMIT, cdaClient } from '@utils/contentful';
 import { parseMovie, parseMovieSummary } from './parseMovieData';
 
 type QueryParamOptions = PaginationOptions & {

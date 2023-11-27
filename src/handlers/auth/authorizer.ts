@@ -1,5 +1,5 @@
 import { APIGatewayRequestAuthorizerHandler } from 'aws-lambda';
-import { isTokenValid } from '../../utils/api/apiAuth';
+import { isTokenValid } from '@utils/api/apiAuth';
 
 export const handler: APIGatewayRequestAuthorizerHandler = async (event) => {
 	const authorization = event.headers?.['Authorization'] || '';

@@ -11,13 +11,16 @@ frameworkVersion: '3'
 useDotenv: true
 
 plugins:
-  - serverless-offline
+  # https://www.serverless.com/plugins/serverless-plugin-typescript - typescript must precede offline
   - serverless-plugin-typescript
+  - serverless-tscpaths
+  - serverless-offline
   - serverless-dotenv-plugin
 
 # The `provider` block defines where your service will be deployed
 provider:
   name: aws
+  profile: moviesApi
   runtime: nodejs18.x
   environment:
     CONTENTFUL_SPACE_ID: ${env:CONTENTFUL_SPACE_ID}

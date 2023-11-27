@@ -1,7 +1,7 @@
 import { APIGatewayProxyHandler } from 'aws-lambda';
-import getAllGenre from '../../models/Genre/getAll';
-import { serverErrorResponse } from '../../utils/api/apiResponses';
-import { DEFAULT_CONTENTFUL_LIMIT } from '../../utils/contentful';
+import getAllGenre from '@models/Genre/getAll';
+import { serverErrorResponse } from '@utils/api/apiResponses';
+import { DEFAULT_CONTENTFUL_LIMIT } from '@utils/contentful';
 
 export const handler: APIGatewayProxyHandler = async (event) => {
 	const { page: queryStringPage = '', limit: queryStringLimit = '' } =

@@ -10,7 +10,16 @@
 		"sourceMap": true,
 		"esModuleInterop": true,
 		"resolveJsonModule": true,
-		"skipLibCheck": true
+		"skipLibCheck": true,
+		"baseUrl": ".",
+		"paths": {
+			"@handlers/*": ["src/handlers/*"],
+			"@models/*": ["src/models/*"],
+			"@schema/*": ["src/schema/*"],
+			"@customTypes/*": ["src/types/*"],
+			"@utils/*": ["src/utils/*"],
+			"@generated/*": ["src/generated/*"]
+		}
 	},
 	"files": [],
 	"include": [],

@@ -1,5 +1,5 @@
-import { MovieContentfulEntry, GenreContentfulEntry } from '../../types/contentful';
-import { MovieSummary, Movie } from '../../types/movie';
+import { GenreContentfulEntry, MovieContentfulEntry } from '@customTypes/contentful';
+import { Movie, MovieSummary } from '@customTypes/movie';
 
 // Function to parse basic movie data (MovieSummary)
 export function parseMovieSummary(entry: MovieContentfulEntry): MovieSummary {
