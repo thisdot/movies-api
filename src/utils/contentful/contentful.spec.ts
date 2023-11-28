@@ -1,12 +1,12 @@
 import { createClient, Environment } from 'contentful-management';
-import { getCMAEnvironment } from './contentful';
+import { cdaClient, getCMAEnvironment } from './contentful';
+import { ContentfulClientApi, createClient as createCDAClient } from 'contentful';
 
 const dummyEnvironment = {
 	accessToken: 'DUMMYTOKEN',
 };
 
 const mockCreateClient = createClient as jest.Mock;
-
 jest.mock('contentful-management', () => ({
 	createClient: jest.fn().mockReturnValue({
 		getSpace: jest.fn().mockResolvedValue({
@@ -17,7 +17,24 @@ jest.mock('contentful-management', () => ({
 	}),
 }));
 
-describe('.getEnviroment', () => {
+const mockCreateCDAClient = createCDAClient as jest.Mock;
+jest.mock('contentful', () => ({
+	createClient: jest.fn().mockReturnValue({}),
+}));
+
+describe('CDA - client', () => {
+	let localCdaClient: ContentfulClientApi<undefined>;
+	beforeAll(async () => {
+		localCdaClient = cdaClient;
+	});
+
+	it('calls createClient from CDA', () => {
+		expect(mockCreateCDAClient).toHaveBeenCalledTimes(1);
+		expect(localCdaClient).toBeTruthy();
+	});
+});
+
+describe('CMA - .getEnviroment', () => {
 	let environment: Environment;
 	let mockGetSpace: jest.Mock;
 	beforeAll(async () => {
@@ -39,9 +56,9 @@ describe('.getEnviroment', () => {
 
 	it('calls getCMAEnvironment function from space result with expected argument', async () => {
 		const mockGetSpaceResult = await mockGetSpace.mock.results[0].value;
-		const mockgetCMAEnvironment = mockGetSpaceResult.getCMAEnvironment;
-		expect(mockgetCMAEnvironment).toHaveBeenCalledTimes(1);
-		expect(mockgetCMAEnvironment).toHaveBeenCalledWith('MOCK_CONTENTFUL_ENVIRONMENT');
+		const mockGetCMAEnvironment = mockGetSpaceResult.getEnvironment;
+		expect(mockGetCMAEnvironment).toHaveBeenCalledTimes(1);
+		expect(mockGetCMAEnvironment).toHaveBeenCalledWith('MOCK_CONTENTFUL_ENVIRONMENT');
 	});
 
 	it('returns expected result', () => {
