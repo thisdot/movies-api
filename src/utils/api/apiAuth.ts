@@ -13,13 +13,13 @@ export const authorizedJWTs = [
 export function isTokenValid(token: string) {
 	let tokenCopy = token;
 
+	if (!tokenCopy) {
+		return false;
+	}
+
 	if (tokenCopy.startsWith('Bearer ')) {
 		// take out the "Bearer " part
 		tokenCopy = tokenCopy.substring(7);
-	}
-
-	if (!tokenCopy) {
-		return false;
 	}
 
 	return authorizedJWTs.includes(tokenCopy);
