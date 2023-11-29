@@ -30,3 +30,8 @@ export const forbiddenResponse: APIGatewayProxyResult = {
 	statusCode: 403,
 	body: JSON.stringify({ message: 'You do not have permission to access this resource' }),
 };
+
+export const noContentResponse: APIGatewayProxyResult = {
+	statusCode: 204,
+	body: JSON.stringify({ message: 'No content' }),
+};

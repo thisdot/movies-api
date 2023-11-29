@@ -9,7 +9,7 @@ export const authorizedJWTs = [
 ];
 
 export function isTokenValid(token: string) {
-	if (!token.startsWith('Bearer ')) {
+	if (!token || !token.startsWith('Bearer ')) {
 		return false;
 	}
 	const tokenValue = token.substring(7);
