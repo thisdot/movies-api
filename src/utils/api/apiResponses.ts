@@ -20,3 +20,18 @@ export const mountSuccessResponse = (bodyObject: object): APIGatewayProxyResult 
 		body: JSON.stringify(bodyObject),
 	};
 };
+
+export const unauthorizedResponse: APIGatewayProxyResult = {
+	statusCode: 401,
+	body: JSON.stringify({ message: 'No auth token provided.' }),
+};
+
+export const forbiddenResponse: APIGatewayProxyResult = {
+	statusCode: 403,
+	body: JSON.stringify({ message: 'You do not have permission to access this resource' }),
+};
+
+export const noContentResponse: APIGatewayProxyResult = {
+	statusCode: 204,
+	body: JSON.stringify({ message: 'No content' }),
+};

@@ -2,8 +2,9 @@ import { APIGatewayProxyHandler } from 'aws-lambda';
 import getAllMovies from '@models/Movie/getAll';
 import { mountSuccessResponse, serverErrorResponse } from '@utils/api/apiResponses';
 import { DEFAULT_CONTENTFUL_LIMIT } from '@utils/contentful';
+import { withAuthorization } from '@utils/api/withAuthorization';
 
-export const handler: APIGatewayProxyHandler = async (event) => {
+export const handler: APIGatewayProxyHandler = withAuthorization(async (event) => {
 	const { page: queryStringPage = '', limit: queryStringLimit = '' } =
 		event?.queryStringParameters || {};
 
@@ -25,4 +26,4 @@ export const handler: APIGatewayProxyHandler = async (event) => {
 	} catch (err) {
 		return serverErrorResponse;
 	}
-};
+});

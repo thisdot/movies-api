@@ -10,6 +10,7 @@ import {
 	notFoundResponse,
 	serverErrorResponse,
 } from '@utils/api/apiResponses';
+import { withAuthorization } from '@utils/api/withAuthorization';
 
 type SearchFilters = {
 	page?: number;
@@ -19,7 +20,7 @@ type SearchFilters = {
 	include?: ContentfulIncludeOptions;
 };
 
-export const handler: APIGatewayProxyHandler = async (event) => {
+export const handler: APIGatewayProxyHandler = withAuthorization(async (event) => {
 	try {
 		const searchFilters: {
 			page?: number;
@@ -72,7 +73,7 @@ export const handler: APIGatewayProxyHandler = async (event) => {
 		console.error('Error fetching movies:', error);
 		return serverErrorResponse;
 	}
-};
+});
 
 export async function fetchMoviesByGenre(searchFilters: SearchFilters) {
 	if (!searchFilters.genre) {

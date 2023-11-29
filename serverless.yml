@@ -36,12 +36,7 @@ provider:
     CONTENTFUL_DELIVERY_API_TOKEN: ${env:CONTENTFUL_DELIVERY_API_TOKEN}
   httpApi:
     cors: true
-    authorizers:
-      simpleAuthorizerFunc:
-        type: request
-        identitySource:
-          - $request.header.Authorization
-        functionName: customAuthorizer
+
   iam:
     role:
       statements:
@@ -55,10 +50,6 @@ provider:
 
 # The `functions` block defines what code to deploy
 functions:
-  # auth functions & APIs
-  customAuthorizer:
-    handler: src/handlers/auth/authorizer.handler
-
   getValidToken:
     handler: src/handlers/auth/getValidToken.handler
     events:
@@ -94,8 +85,6 @@ functions:
       - httpApi:
           path: /genres/movies
           method: get
-          authorizer:
-            name: simpleAuthorizerFunc
 
   movies:
     handler: src/handlers/movies/getMovies.handler
@@ -103,8 +92,6 @@ functions:
       - httpApi:
           path: /movies
           method: get
-          authorizer:
-            name: simpleAuthorizerFunc
 
   movieById:
     handler: src/handlers/movies/movieById.handler
@@ -112,8 +99,6 @@ functions:
       - httpApi:
           path: /movies/{id}
           method: get
-          authorizer:
-            name: simpleAuthorizerFunc
 
   movieTitles:
     handler: src/handlers/movies/getMovieTitles.handler
@@ -121,8 +106,6 @@ functions:
       - httpApi:
           path: /movies/titles
           method: get
-          authorizer:
-            name: simpleAuthorizerFunc
 
   genreById:
     handler: src/handlers/genres/genreById.handler
@@ -130,5 +113,4 @@ functions:
       - httpApi:
           path: /movies/genres/{id}
           method: get
-          authorizer:
-            name: simpleAuthorizerFunc
+

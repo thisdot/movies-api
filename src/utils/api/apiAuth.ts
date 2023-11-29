@@ -1,4 +1,5 @@
 // Genereated from https://jwt.io/
+
 export const authorizedJWTs = [
 	'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJvcGVuSnd0MCIsIm5hbWUiOiJPcGVuSldUWzBdIn0.49JQF4ICJeqxpiIZ9x748VVOHj6FElyRm1tNpFGqaUY',
 	'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJvcGVuSnd0MSIsIm5hbWUiOiJPcGVuSldUWzFdIn0.n8x8GHYe8RQYKkAoMVMlw9-FMZ57bs0HrwxBeJn3hQM',
@@ -8,10 +9,12 @@ export const authorizedJWTs = [
 ];
 
 export function isTokenValid(token: string) {
-	if (!token) {
+	if (!token || !token.startsWith('Bearer ')) {
 		return false;
 	}
-	return authorizedJWTs.includes(token);
+	const tokenValue = token.substring(7);
+
+	return authorizedJWTs.includes(tokenValue);
 }
 
 export function getRandomValidToken(): string {

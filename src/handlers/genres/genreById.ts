@@ -6,8 +6,9 @@ import {
 	notFoundResponse,
 	serverErrorResponse,
 } from '@utils/api/apiResponses';
+import { withAuthorization } from '@utils/api/withAuthorization';
 
-export const handler: APIGatewayProxyHandler = async (event) => {
+export const handler: APIGatewayProxyHandler = withAuthorization(async (event) => {
 	const genreId = event?.pathParameters?.id;
 
 	if (!genreId) {
@@ -33,4 +34,4 @@ export const handler: APIGatewayProxyHandler = async (event) => {
 	} catch (err) {
 		return serverErrorResponse;
 	}
-};
+});
