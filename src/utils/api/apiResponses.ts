@@ -23,10 +23,10 @@ export const mountSuccessResponse = (bodyObject: object): APIGatewayProxyResult 
 
 export const unauthorizedResponse: APIGatewayProxyResult = {
 	statusCode: 401,
-	body: JSON.stringify({ message: 'Unauthorized' }),
+	body: JSON.stringify({ message: 'No auth token provided.' }),
 };
 
 export const forbiddenResponse: APIGatewayProxyResult = {
 	statusCode: 403,
-	body: JSON.stringify({ message: 'Forbidden' }),
+	body: JSON.stringify({ message: 'You do not have permission to access this resource' }),
 };

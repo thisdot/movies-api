@@ -5,7 +5,8 @@ import {
 	Callback,
 	Context,
 } from 'aws-lambda';
-import { validateAuthorizationToken } from '@utils/api/apiAuth';
+import { isTokenValid } from '@utils/api/apiAuth';
+import { forbiddenResponse, unauthorizedResponse } from '@utils/api/apiResponses';
 
 export function withAuthorization(handler: APIGatewayProxyHandler): APIGatewayProxyHandler {
 	return async (
@@ -13,16 +14,26 @@ export function withAuthorization(handler: APIGatewayProxyHandler): APIGatewayPr
 		context: Context,
 		callback: Callback<APIGatewayProxyResult>
 	): Promise<APIGatewayProxyResult> => {
-		const authorizationValidationResult = validateAuthorizationToken(event);
+		const authorization = event.headers?.['authorization'] || '';
 
-		if (authorizationValidationResult) {
-			return authorizationValidationResult;
+		if (!authorization) {
+			return unauthorizedResponse;
+		}
+
+		if (!isTokenValid(authorization)) {
+			return forbiddenResponse;
 		}
 
 		const result = await handler(event, context, callback);
+
+		// Provide a default response if the handler returns void
 		if (result === undefined) {
-			throw new Error('Handler returned undefined');
+			return {
+				statusCode: 204,
+				body: JSON.stringify({ message: 'No content' }),
+			};
 		}
+
 		return result;
 	};
 }

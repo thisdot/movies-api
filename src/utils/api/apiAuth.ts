@@ -1,6 +1,4 @@
 // Genereated from https://jwt.io/
-import { forbiddenResponse, unauthorizedResponse } from '@utils/api/apiResponses';
-import { APIGatewayProxyEvent } from 'aws-lambda';
 
 export const authorizedJWTs = [
 	'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJvcGVuSnd0MCIsIm5hbWUiOiJPcGVuSldUWzBdIn0.49JQF4ICJeqxpiIZ9x748VVOHj6FElyRm1tNpFGqaUY',
@@ -11,35 +9,15 @@ export const authorizedJWTs = [
 ];
 
 export function isTokenValid(token: string) {
-	let tokenCopy = token;
-
-	if (!tokenCopy) {
+	if (!token.startsWith('Bearer ')) {
 		return false;
 	}
+	const tokenValue = token.substring(7);
 
-	if (tokenCopy.startsWith('Bearer ')) {
-		// take out the "Bearer " part
-		tokenCopy = tokenCopy.substring(7);
-	}
-
-	return authorizedJWTs.includes(tokenCopy);
+	return authorizedJWTs.includes(tokenValue);
 }
 
 export function getRandomValidToken(): string {
 	const randomIdx = Math.floor(Math.random() * authorizedJWTs.length);
 	return authorizedJWTs[randomIdx];
-}
-
-export function validateAuthorizationToken(event: APIGatewayProxyEvent) {
-	const authorization = event.headers?.['authorization'] || '';
-
-	if (!authorization) {
-		return unauthorizedResponse;
-	}
-
-	if (!isTokenValid(authorization)) {
-		return forbiddenResponse;
-	}
-
-	return null;
 }
