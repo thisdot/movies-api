@@ -34,16 +34,10 @@ provider:
   environment:
     CONTENTFUL_SPACE_ID: ${env:CONTENTFUL_SPACE_ID}
     CONTENTFUL_DELIVERY_API_TOKEN: ${env:CONTENTFUL_DELIVERY_API_TOKEN}
+    CONTENTFUL_CONTENT_MANAGEMENT_API_TOKEN: ${env:CONTENTFUL_CONTENT_MANAGEMENT_API_TOKEN}
   httpApi:
     cors: true
 
-  iam:
-    role:
-      statements:
-        - Effect: Allow
-          Action:
-            - lambda:InvokeFunction
-          Resource: arn:aws:lambda:*:*:*
   tracing:
     apiGateway: true
     lambda: true
