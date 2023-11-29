@@ -20,3 +20,13 @@ export const mountSuccessResponse = (bodyObject: object): APIGatewayProxyResult 
 		body: JSON.stringify(bodyObject),
 	};
 };
+
+export const unauthorizedResponse: APIGatewayProxyResult = {
+	statusCode: 401,
+	body: JSON.stringify({ message: 'Unauthorized' }),
+};
+
+export const forbiddenResponse: APIGatewayProxyResult = {
+	statusCode: 403,
+	body: JSON.stringify({ message: 'Forbidden' }),
+};

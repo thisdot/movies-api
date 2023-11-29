@@ -1,4 +1,7 @@
 // Genereated from https://jwt.io/
+import { forbiddenResponse, unauthorizedResponse } from '@utils/api/apiResponses';
+import { APIGatewayProxyEvent } from 'aws-lambda';
+
 export const authorizedJWTs = [
 	'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJvcGVuSnd0MCIsIm5hbWUiOiJPcGVuSldUWzBdIn0.49JQF4ICJeqxpiIZ9x748VVOHj6FElyRm1tNpFGqaUY',
 	'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJvcGVuSnd0MSIsIm5hbWUiOiJPcGVuSldUWzFdIn0.n8x8GHYe8RQYKkAoMVMlw9-FMZ57bs0HrwxBeJn3hQM',
@@ -8,13 +11,35 @@ export const authorizedJWTs = [
 ];
 
 export function isTokenValid(token: string) {
-	if (!token) {
+	let tokenCopy = token;
+
+	if (tokenCopy.startsWith('Bearer ')) {
+		// take out the "Bearer " part
+		tokenCopy = tokenCopy.substring(7);
+	}
+
+	if (!tokenCopy) {
 		return false;
 	}
-	return authorizedJWTs.includes(token);
+
+	return authorizedJWTs.includes(tokenCopy);
 }
 
 export function getRandomValidToken(): string {
 	const randomIdx = Math.floor(Math.random() * authorizedJWTs.length);
 	return authorizedJWTs[randomIdx];
+}
+
+export function validateAuthorizationToken(event: APIGatewayProxyEvent) {
+	const authorization = event.headers?.['authorization'] || '';
+
+	if (!authorization) {
+		return unauthorizedResponse;
+	}
+
+	if (!isTokenValid(authorization)) {
+		return forbiddenResponse;
+	}
+
+	return null;
 }

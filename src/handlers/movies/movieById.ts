@@ -7,8 +7,9 @@ import {
 import getMovieById from '@models/Movie/getById';
 import { CONTENTFUL_INCLUDE } from '@customTypes/contentful';
 import { isCustomContentfulError } from '@utils/api/utils';
+import { withAuthorization } from '@utils/api/withAuthorization';
 
-export const handler: APIGatewayProxyHandler = async (event) => {
+export const handler: APIGatewayProxyHandler = withAuthorization(async (event) => {
 	const movieId = event?.pathParameters?.id;
 
 	if (!movieId) {
@@ -38,4 +39,4 @@ export const handler: APIGatewayProxyHandler = async (event) => {
 
 		return serverErrorResponse;
 	}
-};
+});
