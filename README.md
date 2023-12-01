@@ -23,7 +23,7 @@ To use our API, first, obtain a bearer token:
 
 1. Open the GraphQL sandbox endpoint and click on the connection settings
 
-   [ add image here ]
+![connection settings](./screenshots/GraphQL_sandbox_connection_settings_1.png)
 
 2. Update the headers by adding the `Authorization` bearer token
 
