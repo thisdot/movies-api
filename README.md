@@ -12,11 +12,15 @@ Welcome to the `movies-api` repository! This open-source project provides a comp
 
 ## Getting Started
 
+### Base URL
+
+The base URL for our API is `https://0kadddxyh3.execute-api.us-east-1.amazonaws.com`. All endpoints are prefixed with this base URL.
+
 ### Obtaining an Access Token
 
 To use our API, first, obtain a bearer token:
 
-1. Send a `GET` request to `https://0kadddxyh3.execute-api.us-east-1.amazonaws.com/auth/token`.
+1. Send a `GET` request to `/auth/token`.
 2. Use this token in the Authorization header of your subsequent API calls.
 
 ### Setting Up the GraphQL Sandbox
@@ -56,7 +60,7 @@ Here's a list of our available API endpoints:
 
 ### GraphQL Queries
 
-GraphQL queries can be accessed using the endpoint `/graphql`. Open the sandbox at `https://0kadddxyh3.execute-api.us-east-1.amazonaws.com/graphql` and take a look at the query schema documentation.
+GraphQL queries can be accessed using the endpoint `/graphql`. Open the sandbox at `/graphql` and take a look at the query schema documentation.
 
 ![graphql query schema documentation](./screenshots/GraphQL_schema_query_doc.png)
 
