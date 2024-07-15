@@ -48,9 +48,7 @@ export const server = startServerAndCreateLambdaHandler<MyContext>(apolloServer,
 			});
 		}
 
-		// removing the initial "Bearer "
-		const token = authorization.substring(7);
-		const isAuthorized = isTokenValid(token);
+		const isAuthorized = isTokenValid(authorization);
 		if (!isAuthorized) {
 			throw new GraphQLError('User is not authorized to access this resource', {
 				extensions: { code: 'FORBIDDEN', http: { status: 403 } },
