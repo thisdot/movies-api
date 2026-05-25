@@ -28,7 +28,7 @@ provider:
   name: aws
   profile: moviesApi
   deploymentMethod: direct
-  runtime: nodejs18.x
+  runtime: nodejs22.x
   memorySize: 512
   timeout: 10
   environment:
